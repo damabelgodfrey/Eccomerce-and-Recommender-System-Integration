@@ -1,0 +1,517 @@
+body{
+   padding-top: 50px;
+}
+
+#headerWrapper{
+  position:relative;
+  padding:0;
+  margin:0;
+  overflow-x:hidden;
+  height:300px;
+  background-image: url(../images/headerlogo/background.png);
+  background-repeat: no-repeat;
+  background-size: 100% 300px;
+  background-position: top center;
+  background-attachment: fixed;
+  }
+
+  #headerWrapperPartial{
+    position:relative;
+    padding:0;
+    margin:0;
+    overflow-x:hidden;
+    height:300px;
+    background-image: url(../images/headerlogo/background.png);
+    background-repeat: no-repeat;
+    background-size: 100% 300px;
+    background-position: top center;
+    background-attachment: fixed;
+    }
+    #logotextP{
+      position: absolute;
+      width: 100%;
+      height: 180px;
+      background-image: url(../images/headerlogo/text.png);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 0% 0px;
+      top: 20%;
+      margin-top: -90px:
+      }
+
+    #fore-flowerP{
+      position: absolute;
+      width: 100%;
+      height: 400px;
+      background-image: url(../images/headerlogo/fore-flower.png);
+      background-size:auto 400px;
+      background-repeat: no-repeat;
+      background-position: right bottom;
+      top:100px;
+      right: -50px;
+      }
+
+    #back-flowerP{
+      position: absolute;
+      width: 100%;
+      height: 350px;
+      background-image: url(../images/headerlogo/back-flower.png);
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      background-size: auto 350px;
+      top: 100px;
+      left:-25px;
+    }
+#logotext{
+  position: absolute;
+  width: 100%;
+  height: 180px;
+  background-image: url(../images/headerlogo/text.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0% 0px;
+  top: 50%;
+  margin-top: -90px:
+  }
+
+#fore-flower{
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  background-image: url(../images/headerlogo/fore-flower.png);
+  background-size:auto 400px;
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  top:100px;
+  right: -50px;
+  }
+
+#back-flower{
+  position: absolute;
+  width: 100%;
+  height: 350px;
+  background-image: url(../images/headerlogo/back-flower.png);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: auto 350px;
+  top: 100px;
+  left:-25px;
+}
+/* use . to target a class */
+img.img-thumb{
+  width: 200px;
+  height: 200px;
+}
+
+#footer{
+  margin-top: 50px;
+}
+ /* position the product image screen (pop  up detail) to center of container*/
+fotorama__wrap{
+  width: 90%;
+  margin: 15px auto;
+}
+
+.fotorama__html div,
+.fotorama__html a {
+  display: block;
+  height: 100%;
+  /* Transparent links are not clickable in IE,
+     but non-existent background fixes this.
+    (Put an empty 1×1 image here to avoid
+     errors in console.) */
+  background: url(_.gif);
+}
+img.detailsrightbar{
+  width: 90%;
+  margin: 15px auto;
+}
+img.cartImage{
+  width: 20%;
+  margin: 15px auto;
+}
+
+.table-auto{
+  width: auto;
+  margin:0 auto;
+}
+
+#add-product-btn{
+  margin-top: -35px;
+}
+
+#add-user-btn{
+  margin-top: -35px;
+}
+.saved-image{
+  text-align: center;
+}
+.saved-image img{
+  width:auto;
+  height: 150px;
+}
+#login-form{
+  width: 50%;
+  height: 60%;
+  border: 2px solid #000;
+  border-radius: 15px;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+  margin: 7% auto;
+  padding: 15px;
+  background-color: #fff;
+  background-image: url(../images/headerlogo/login-image.png);
+}
+/*
+#password{
+  width: 70%;
+  height: auto;
+}
+
+#email{
+  width: 70%;
+  height: auto;
+}
+*/
+img.display{
+  width: 30%;
+  height: auto;
+
+}
+
+.totals-table-header th{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+/*side bar cart color */
+#subTcart{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+
+#searchBy{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+/*display cart summary on side bar */
+#cart_widget td, #recent_widget td{
+  font-size: 12px;
+}
+.item-table-header th{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+
+.items_ordered_header th{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+#orderTableHead1 th #orderTableHead2 th{
+  text-align:center;
+  background-color: #B0C4DE;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+}
+
+.table th{
+  text-align:center;
+  box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6);
+  font-size: 16px;
+  background-color: #21618c;
+  color: white;
+}
+.grandTotallabel{
+  text-align:center;
+  background-color: #690;
+}
+
+.table-body{
+  text-align:center;
+}
+
+.navbar{
+text-align:center;
+background-color: #FF0000;
+/* box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.6); */
+font: bold 16px sans-serif;
+}
+#Nav a{
+     color: #f2f2f2;
+     text-decoration:none;
+}
+
+#Nav a:hover {
+    color: blue;
+    transition: all 4s ease;
+}
+
+
+@keyframes bounce {
+	0%, 20%, 60%, 100% {
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+
+	40% {
+		-webkit-transform: translateY(-20px);
+		transform: translateY(-20px);
+	}
+
+	80% {
+		-webkit-transform: translateY(-10px);
+		transform: translateY(-10px);
+	}
+}
+
+#Nav a:hover {
+	animation: bounce 1s;
+}
+
+#detailLabel img:hover{
+  animation: bounce 1s;
+}
+
+
+.dropdown-menu{
+text-align:center;
+background-color: #00008B;
+font: bold 14px sans-serif;
+}
+input.price-range{
+  width: 55px;
+}
+
+
+.footer-distributed{
+	background-color: #292c2f;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	text-align: left;
+	font: bold 16px sans-serif;
+
+	padding: 55px 50px;
+	margin-top: 80px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+	display: inline-block;
+	vertical-align: top;
+}
+
+/* Footer left */
+
+.footer-distributed .footer-left{
+	width: 40%;
+}
+
+/* The company logo */
+
+.footer-distributed h3{
+	color:  #ffffff;
+	font: normal 36px 'Cookie', cursive;
+	margin: 0;
+}
+
+.footer-distributed h3 span{
+	color:  #5383d3;
+}
+
+/* Footer links */
+
+.footer-distributed .footer-links{
+	color:  #ffffff;
+	margin: 20px 0 12px;
+	padding: 0;
+}
+
+.footer-distributed .footer-links a{
+	display:inline-block;
+	line-height: 1.8;
+	text-decoration: none;
+	color:  inherit;
+}
+
+.footer-distributed .footer-company-name{
+	color:  #8f9296;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 0;
+}
+
+/* Footer Center */
+
+.footer-distributed .footer-center{
+	width: 35%;
+}
+
+.footer-distributed .footer-center i{
+	background-color:  #33383b;
+	color: #ffffff;
+	font-size: 25px;
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 42px;
+	margin: 10px 15px;
+	vertical-align: middle;
+}
+
+.footer-distributed .footer-center i.fa-envelope{
+	font-size: 17px;
+	line-height: 38px;
+}
+
+.footer-distributed .footer-center p{
+	display: inline-block;
+	color: #ffffff;
+	vertical-align: middle;
+	margin:0;
+}
+
+.footer-distributed .footer-center p span{
+	display:block;
+	font-weight: normal;
+	font-size:14px;
+	line-height:2;
+}
+
+.footer-distributed .footer-center p a{
+	color:  #5383d3;
+	text-decoration: none;;
+}
+
+
+/* Footer Right */
+
+.footer-distributed .footer-right{
+	width: 20%;
+}
+
+.footer-distributed .footer-company-about{
+	line-height: 20px;
+	color:  #92999f;
+	font-size: 13px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+	display: block;
+	color:  #ffffff;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.footer-distributed .footer-icons{
+	margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	cursor: pointer;
+	background-color:  #33383b;
+	border-radius: 2px;
+
+	font-size: 20px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 35px;
+
+	margin-right: 3px;
+	margin-bottom: 5px;
+}
+#socialHover a:hover {
+  background-color: #000;
+  animation: bounce 1s;
+}
+#facebook {
+  background: #3B5998;
+  color: white;
+}
+
+#twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+#instagram {
+  background: #dd4b39;
+  color: white;
+}
+
+#linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+#youtube {
+  background: #bb0000;
+  color: white;
+}
+/* If you don't want the footer to be responsive, remove these media queries */
+
+@media (max-width: 880px) {
+
+	.footer-distributed{
+		font: bold 14px sans-serif;
+	}
+
+	.footer-distributed .footer-left,
+	.footer-distributed .footer-center,
+	.footer-distributed .footer-right{
+		display: block;
+		width: 100%;
+		margin-bottom: 40px;
+		text-align: center;
+	}
+
+	.footer-distributed .footer-center i{
+		margin-left: 0;
+	}
+
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
