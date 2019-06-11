@@ -1,0 +1,4 @@
+deny from all
+<Files ~ "^add_cart|update_cart|child_categories|check_address\.php">
+  Allow from all
+</Files>
