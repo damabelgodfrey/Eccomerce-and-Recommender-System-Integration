@@ -1,0 +1,3 @@
+<Files ~ "^helpers\.php">
+  Deny from all
+</Files>
