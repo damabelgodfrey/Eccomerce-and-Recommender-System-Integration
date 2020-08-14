@@ -1,0 +1,4 @@
+deny from all
+<Files ~ "^add_cart|update_cart|child_categories|check_address|check_product|cart_check|detailsmodal|exploresalemodal|exploresalemodalgraph\.php">
+  Allow from all
+</Files>
