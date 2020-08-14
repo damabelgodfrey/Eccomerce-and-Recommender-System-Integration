@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
 $transQ = $db->query("SELECT * FROM cart ORDER BY id DESC LIMIT 10");
+=======
+$transQ = $db->query("SELECT * FROM cart WHERE paid = 1 ORDER BY id DESC LIMIT 10");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 $return = mysqli_num_rows($transQ);
   if($return > 0){
     $results=array();

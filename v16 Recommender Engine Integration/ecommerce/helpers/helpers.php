@@ -1,5 +1,6 @@
 <?php
 //require_once '../core/init';
+<<<<<<< HEAD
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/includes/PorterStemmer.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/DictionaryLookUp.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ContentBased_CosineSimilarity.php';
@@ -16,6 +17,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/Parser
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RootMeanSquareEstimation.php';
 
 
+=======
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 // function to pass in an array of errors style in bootstrap for errors
 function display_errors($errors){
   $display = '<ul class="bg-danger">';
@@ -71,10 +74,15 @@ function loginstaff($staff_id,$staff_username,$staff_permission){
   }else{
     $_SESSION['maintenance_admin_login'] = $admin_mode;
   }
+<<<<<<< HEAD
   $date = date("Y-m-d H:i:s"); //this is the date format of the Database
   //$db->query("UPDATE users SET last_login = '$date' WHERE username = '$staff_username'");
   $repoObject = new UserController();
   $repoObject->updateUserLogin("staff",$date,$staff_username);
+=======
+  //$date = date("Y-m-d H:i:s"); //this is the date format of the Database
+  //$db->query("UPDATE users SET last_login = '$date' WHERE username = '$staff_username'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   $_SESSION['success_flash'] = $staff_username.' you are now logged in!';
     if(isset($_SESSION['staff_rdrurl'])){
       header('location: '.$_SESSION['staff_rdrurl']);
@@ -89,9 +97,13 @@ function loginCustomer($user_id,$user_username){
   $_SESSION['last_login_timestamp'] = time();
   global $db; //make database object a global variable
   $date = date("Y-m-d H:i:s"); //this is the date format of the Database
+<<<<<<< HEAD
   //$db->query("UPDATE customer_user SET last_login = '$date' WHERE username = '$user_username' ");
   $repoObject = new UserController();
   $repoObject->updateUserLogin("customer",$date,$user_username);
+=======
+  $db->query("UPDATE customer_user SET last_login = '$date' WHERE username = '$user_username' ");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   $_SESSION['success_flash'] = 'you are now logged in!';
     if(isset($_SESSION['rdrurl'])){
       header('location: '.$_SESSION['rdrurl']);
@@ -344,7 +356,11 @@ function updateProductQty($item,$db){
  }
   return;
 }
+<<<<<<< HEAD
 //update product quantity on cart and wishlist update
+=======
+
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 function updateProductQtyupdate($mode,$items,$db,$edit_id,$edit_size,$edit_quantity){
   $productQ = $db->query("SELECT * FROM products WHERE id = '{$edit_id}'");
   $product = mysqli_fetch_assoc($productQ);
@@ -382,7 +398,11 @@ return;
 function expireReturnProduct($cart_id,$user_name,$db){
   $paid = 0;
   $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
+<<<<<<< HEAD
   $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+=======
+  $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 //  $db->query("INSERT INTO wishlist(id,items,username,expire_date) VALUES ({$cart_id}','{$cartQ}','{$user_name}','{$cart_expire}')");
   $result = mysqli_fetch_assoc($cartQ);
   $cart_items = json_decode($result['items'],true);
@@ -400,7 +420,11 @@ function expireReturnProduct($cart_id,$user_name,$db){
     $json_update = json_encode($updated_items);
     //$db->query("UPDATE cart SET items = '{$json_update}' WHERE id = '{$cart_id}' AND paid = '{$paid}'");
     //$_SESSION['success_flash'] = 'Your shopping cart has been updated';
+<<<<<<< HEAD
     $cart_item = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+=======
+    $cart_item = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     $cart = mysqli_fetch_assoc($cart_item);
     $items = json_decode($cart['items'],true); //makes it an associated array not an object
     foreach ($items as $w_item) {
@@ -421,17 +445,26 @@ function expireReturnProduct($cart_id,$user_name,$db){
       $available = $nill;
      cart_wishlist_update('wishlist',$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available);
     }
+<<<<<<< HEAD
     $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+=======
+    $db->query("DELETE FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     $_SESSION['success_flash'] = $user_name. ' Your shopping cart has been updated';
   }
 
   if(empty($updated_items)){
+<<<<<<< HEAD
     $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+=======
+    $db->query("DELETE FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   }
 }
 
 //This function update wish list and cart.
 function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available){
+<<<<<<< HEAD
   if($mode == 'wishlist'|| $mode == 'wish'){
     $wishlistRepObj = new WishlistRepoController();
     $cartQ = $wishlistRepObj->selectWishlist($user_name);
@@ -440,10 +473,20 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
     $cartQ = $CartRepObj->selectCart($user_name);
   }
   $return = count($cartQ);
+=======
+  $paid = 0;
+  if($mode == 'wishlist'|| $mode == 'wish'){
+    $cartQ = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
+  }else{
+    $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+  }
+  $return = mysqli_num_rows($cartQ);
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   if($return != 1){
     $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
     $exp_time = time();
       if($mode != 'wishlist'){
+<<<<<<< HEAD
         $items_json = json_encode($item);
         if($mode == 'cart'){
           $cart_id=  $CartRepObj->insertCart($items_json, $user_name, $cart_expire, $exp_time);
@@ -462,6 +505,29 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
       $previous_items = json_decode($cart['items'],true); //makes it an associated array not an object
       $item_match = 0;
       $new_items = array();
+=======
+      $items_json = json_encode($item);
+        if($mode == 'cart'){
+          $db->query("INSERT INTO cart (items,username,expire_date,exp_time) VALUES ('{$items_json}','{$user_name}','{$cart_expire}','{$exp_time}')");
+        $cart_id = $db->insert_id; //return the last inserted item in database
+        $_SESSION['success_flash'] = ' Item added to Cart successfully.';
+          $_SESSION['cartid'] = $cart_id;
+       }else{
+         $db->query("INSERT INTO wishlist (items,username,expire_date) VALUES ('{$items_json}','{$user_name}','{$cart_expire}')");
+         $w_id = $db->insert_id; //return the last inserted item in database
+         $_SESSION['success_flash'] = $wish_id.' Item added to Wish List successfully.';
+        }
+      }else{
+      $db->query("INSERT INTO wishlist (id,username,items,expire_date) VALUES ('{$cart_id}','{$user_name}','{$json_update}','{$cart_expire}')");
+      $_SESSION['success_flash'] =  'wishlist update successful..';
+      }
+  }else{
+    $cart = mysqli_fetch_assoc($cartQ);
+    $previous_items = json_decode($cart['items'],true); //makes it an associated array not an object
+    $item_match = 0;
+    $new_items = array();
+    //$_SESSION['success_flash'] = $product['title']. ' in loop.';
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
       foreach ($previous_items as $pitem){
         if($item[0]['id'] == $pitem['id'] && $item[0]['size'] == $pitem['size']){
           if($mode == 'cart'){
@@ -473,10 +539,18 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
           }else{
             $pitem['quantity'] =$pitem['quantity'] + $item[0]['quantity'];
           }
+<<<<<<< HEAD
          $item_match = 1;
         }
         $new_items[] = $pitem;
        }
+=======
+        $item_match = 1;
+      }
+      $new_items[] = $pitem;
+    }
+
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     if($item_match != 1){
       $new_items = array_merge($item,$previous_items);
     }
@@ -485,6 +559,7 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
     $exp_time = time();
 
       if($mode == 'cart'){
+<<<<<<< HEAD
           $CartRepObj->updateCart($items_json,$cart_expire,$exp_time,$user_name);
          $_SESSION['success_flash'] =  'cart update successful..';
       }else{
@@ -495,4 +570,228 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
 }
   $rating = new RatingController();
   $rating->RateProduct($item[0]['id'],PURCHASE_RATING,$user_name,'cart_wish');
+=======
+         $db->query("UPDATE cart SET items = '{$items_json}', expire_date = '{$cart_expire}', exp_time = '{$exp_time}'
+                     WHERE username = '{$user_name}' AND paid = '{$paid}'");
+         $_SESSION['success_flash'] =  'cart update successful..';
+      }else{
+        $db->query("UPDATE wishlist SET items = '{$items_json}', expire_date = '{$cart_expire}' WHERE username = '{$user_name}'");
+        $_SESSION['success_flash'] =  'wishlist update successful..';
+      }
+  }
+  RateProduct($item[0]['id'], 5,$user_name,'cart_wish');
+}
+
+//This funcion rate a product
+function RateProduct($product_id, $rating,$user_name,$ratingType){
+    $db = getDatabaseConnection();
+    $ratingQ = $db->query("SELECT * FROM ratings WHERE username = '{$user_name}'");
+    $ratingExistCheck = mysqli_num_rows($ratingQ);
+    $updated_time = date("Y-m-d h:i:s", time());
+    $product_rating = array();
+    if($ratingType == "explicit"){ //purchase automatically asign a 5 rating to the product, while add to cart or wishlist asign a 4 rating
+      $rating = $rating;
+    }else if($ratingType == "purchase"){
+      $rating = 5;
+    }else{
+      $rating = 4; //user behavior e.g add to cart or wish liist
+    }
+    $product_rating[] = array(
+        'product_id'            => $product_id,
+        'ratingType' => $ratingType,
+        'rating'    => $rating,
+      );
+  if($ratingExistCheck != 1){ //insert user rating row to database if user have not rated any product previously
+    $rating_json = json_encode($product_rating);
+    $db->query("INSERT INTO ratings (username,last_updated,product_rating) VALUES ('{$user_name}','{$updated_time}','{$rating_json}')");
+  }else{//update existing product_rating json object
+    $ratingtable = mysqli_fetch_assoc($ratingQ);
+    $previosu_rating_match = 'false';
+    $new_rating = array();
+    $previous_product_rating = json_decode($ratingtable['product_rating'],true); //makes it an associated array not an object
+      foreach ($previous_product_rating as $p_rating){
+        if($product_id == $p_rating['product_id']){ //update rating if the product was rated previously by user
+          if($ratingType == 'explicit'){
+          $p_rating['rating'] = $product_rating[0]['rating'];
+        }else if($p_rating['ratingType'] != 'explicit' && $ratingType = 'purchase'){
+          $p_rating['rating'] = $product_rating[0]['rating'];
+        }else{}//do not update existing rating on add to cart or wish list event
+      $previosu_rating_match = 'true';
+      }
+      $new_rating[] = $p_rating;
+    }
+    if($previosu_rating_match == 'false'){//add new rating if user have not rated previously rated this product
+      $new_rating = array_merge($product_rating,$previous_product_rating);
+    }
+      $rating_json = json_encode($new_rating);
+      $db->query("UPDATE ratings SET product_rating = '{$rating_json}',last_updated ='{$updated_time}' WHERE username = '{$user_name}'");
+      $_SESSION['success_flash'] = 'rating update successful..';
+  }
+      computeProductAverageRating($product_id);
+}
+
+function getProductRatingForUser($product_id, $user){
+   $db = getDatabaseConnection();
+  $returnRating = 0; //rating or zero no rating
+  $ratingQ = $db->query("SELECT * FROM ratings WHERE username = '{$user}'");
+  $ratingExistCheck = mysqli_num_rows($ratingQ);
+  if(mysqli_num_rows($ratingQ) ==1){
+  $ratingtable = mysqli_fetch_assoc($ratingQ);
+  $product_rating = json_decode($ratingtable['product_rating'],true); //makes it an associated array not an object
+    foreach ($product_rating as $p_rating){
+      if($product_id == $p_rating['product_id']){
+      $returnRating =  $p_rating['rating'];
+      }
+    }
+  }
+  return $returnRating;
+}
+
+function getDatabaseConnection(){
+  $db = mysqli_connect('127.0.0.1','root','','store');
+
+  if (mysqli_connect_errno()) {
+    echo 'Database Connection falled with the following error:', mysqli_connect_error();
+    die();
+  }
+  return $db;
+}
+//compute product average rating.
+function computeProductAverageRating($product_id){
+  $db = getDatabaseConnection();
+  $ratingQ = $db->query("SELECT product_rating FROM ratings");
+  if(mysqli_num_rows($ratingQ) >0){
+  //$ratingtable = mysqli_fetch_assoc($ratingQ);
+  $rating_counter = 0;
+  $summation =0;
+
+  while ($ratingtable = mysqli_fetch_assoc($ratingQ)){
+    $current_product_rating = json_decode($ratingtable['product_rating'],true);
+    foreach ($current_product_rating as $p_rating){
+      if($product_id == $p_rating['product_id']){
+        $summation = $summation + $p_rating['rating'];
+        $rating_counter++;
+      }
+    }
+  }
+  if($summation != 0){
+    $newAvgRating = number_format(($summation/$rating_counter),1);
+    $db->query("UPDATE products SET product_average_rating = '{$newAvgRating}', product_rating_counter = '{$rating_counter}'
+          WHERE id = '{$product_id}'");
+   }
+  }
+}
+
+
+function recommend($ExistingMatrix, $user){
+  $total =array();
+  $simsums =array();
+  foreach($ExistingMatrix as $otherUser =>$value){
+    if($otherUser !=$user){
+      $sim = similarity_distance($ExistingMatrix,$user,$otherUser);
+      echo "<pre>";
+      print_r($otherUser);  echo " => "; //item name .. sort database with the product name;
+      print_r($sim); //prediction rank
+      echo "</pre>";; //
+
+      //compute prediction to fill in missing matrix
+      foreach($ExistingMatrix[$otherUser] as $key=>$value){
+        if(!array_key_exists($key,$ExistingMatrix[$user])){
+          if(!array_key_exists($key,$total)){
+            $total[$key] = 0;
+          }
+
+          $total[$key]+=$ExistingMatrix[$otherUser][$key]*$sim;
+          if(!array_key_exists($key,$simsums)){
+            $simsums[$key] = 0;
+          }
+          $simsums[$key]+=$sim;
+        }
+      }
+
+var_dump ($total); echo' =>=>  '; var_dump ($simsums);
+    }
+  }
+
+  $ranks = array();
+
+
+
+  foreach ($total as $key => $value) {
+    $ranks[$key]= $value/$simsums[$key];
+  }
+  array_multisort($ranks,SORT_DESC); //get recommender item with the highest rating at the top
+  echo "<br>";
+  echo "<pre>";
+  print_r($ranks);
+  echo "</pre>";
+  return $ranks;
+}
+
+
+function prediction($ExistingMatrix,$user,$otherUser,$sim){
+ $total =array();
+ $simsums =array();
+  foreach($ExistingMatrix[$otherUser] as $key=>$value){
+    if(!array_key_exists($key,$ExistingMatrix[$user])){
+      if(!array_key_exists($key,$total)){
+        $total[$key] = 0;
+      }
+
+      $total[$key]+=$ExistingMatrix[$otherUser][$key]*$sim;
+      if(!array_key_exists($key,$simsums)){
+        $simsums[$key] = 0;
+      }
+      $simsums[$key]+=$sim;
+    }
+  }
+
+  $total_Simsums_Container = array (
+  array($total),
+  array($simsums),
+  );
+  return $total_Simsums_Container;
+}
+
+//conpute similarity similarity_distance
+function similarity_distance($matrix,$user1,$Users2){
+  $similar = array();
+  $sum = 0;
+  foreach ($matrix[$user1] as $key => $value) {
+    if(array_key_exists($key,$matrix[$Users2])){
+        $similar[$key] = 1;
+    }
+  }
+
+  if($similar ==0){
+    return 0;
+  }
+
+  foreach ($matrix[$user1] as $key => $value) {
+    if(array_key_exists($key,$matrix[$Users2])){
+         $sum = $sum + pow($value - $matrix[$Users2][$key],2);
+    }
+  }
+  return 1/(1+sqrt($sum));
+}
+
+// compute rating matrix
+ function createRatingMatrix(){
+   $db = mysqli_connect('127.0.0.1','root','','store');
+  $allRatingsQ = $db->query("SELECT * FROM ratings");
+  $matrix = array();
+  while ($allRatings = mysqli_fetch_assoc($allRatingsQ)) {
+    $product_rating = json_decode($allRatings['product_rating'],true); //makes it an associated array not an object
+      foreach ($product_rating as $p_rating){
+        $id = $p_rating['product_id'];
+        $itemQ =$db->query("SELECT title FROM products where id = '{$id}' ");
+        $item= mysqli_fetch_assoc($itemQ);
+        $matrix[$allRatings['username']] [$item['title']]= $p_rating['rating'];
+      }
+  }
+  echo "<pre>";
+  print_r($matrix);
+  echo "</pre>";
+  return $matrix;
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 }

@@ -1,5 +1,14 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/core/init.php';
+<<<<<<< HEAD
+=======
+//is_logged_in function is in helper file
+//check if user is logged in on any of the pages
+//if(!is_logged_in()){
+//  login_error_redirect();
+//}
+//check if user hs permision to view page
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 include 'includes/head.php';
 include 'includes/navigation.php';
 ?><style>
@@ -28,16 +37,27 @@ if(isset($_POST['C_register'])){
   $permission = ((isset($_POST['permission']))?sanitize($_POST['permission']):'');
   $permissions = '';
   $required = array('username','full_name','phone', 'email','password', 'confirm');
+<<<<<<< HEAD
 //  $emailQuery = $db->query("SELECT * FROM customer_user WHERE email='$email'");
   $repoObject = new UserController();
   $emailQuery = $repoObject->selectUser($email);
+=======
+  $emailQuery = $db->query("SELECT * FROM customer_user WHERE email='$email'");
+
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     foreach($required as $f){
       if(empty($_POST[$f])){
         $errors[]="You must fill all fields.";
         break;
       }
     }
+<<<<<<< HEAD
     $emailCount = count($emailQuery);
+=======
+
+
+    $emailCount = mysqli_num_rows($emailQuery);
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     if($emailCount !=0){
       $errors[] = 'That email or username already exist with a different user';
     }
@@ -63,19 +83,36 @@ if(isset($_POST['C_register'])){
       //add to database
           $hashed =password_hash($password,PASSWORD_DEFAULT);
           $permissions = 'customer';
+<<<<<<< HEAD
           $repoObj = new UserController();
 
           $lastInsertion = $repoObj->registerUser($username,$name,$phone,$email,$hashed,$permissions);
 
           if(is_int($lastInsertion){
+=======
+          $db->query("INSERT INTO customer_user (username,full_name,phone,email,password,permissions) values('$username','$name','$phone','$email','$hashed','$permissions')");
+          //$_SESSION['success_flash'] .= $name. ' You can now log in!';
+          //header('Location: index.php');
+          $counter = $db->query("SELECT * FROM customer_user WHERE email='$email'");
+          $confirm = mysqli_num_rows($counter);
+          if($confirm == 0){
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
               $errors[] = 'Error occur while registering you! Try again';
           }
           if(!empty($errors)){
             echo display_errors($errors);
           }else{
+<<<<<<< HEAD
           $successflag =1;
           $successes [] = 'Registration successful! Click return to website button';
           $s_display =display_success($successes);?>
+=======
+          $db->close();
+          $successflag =1;
+          $successes [] = 'Registration successful! Click return to website button';
+          $s_display =display_success($successes);?>
+
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
           <script>
             jQuery('document').ready(function(){
               jQuery('#success').html('<?=$s_display; ?>');
@@ -86,7 +123,11 @@ if(isset($_POST['C_register'])){
       }
     }
  ?>
+<<<<<<< HEAD
   <title> Ecommerce </title>
+=======
+  <title> Ameritinz Supermart </title>
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 <div class="container col-md-12">
   <div id="Register-form">
     <?php if($successflag==1){ $successflag = 0;?>

@@ -6,13 +6,21 @@ if($_POST['mode']){
   $edit_id = sanitize($_POST['edit_id']);
   $edit_quantity = sanitize($_POST['edit_quantity']);
   $available = sanitize($_POST['edit_available']);
+<<<<<<< HEAD
+=======
+  $paid = 0;
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   $item_found = 0;
   if($mode == 'wish' || $mode == 'wishdelete'){
     $cartQ = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
   }else if($mode == 'wishdelete'){
     $cartQ = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
   }else{
+<<<<<<< HEAD
     $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+=======
+    $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   }
   $return = mysqli_num_rows($cartQ);
     if($return > 0){
@@ -102,10 +110,15 @@ if($_POST['mode']){
        }else{
          $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
          $exp_time = time();
+<<<<<<< HEAD
         // $db->query("UPDATE cart SET items = '{$newUpItem}', expire_date = '{$cart_expire}', exp_time = '{$exp_time}'
                     // WHERE username = '{$user_name}'");
           $repoObject = new CartRepoController();
           $repoObject->updateCart($newUpItem,$cart_expire,$exp_time,$user_name);
+=======
+         $db->query("UPDATE cart SET items = '{$newUpItem}', expire_date = '{$cart_expire}', exp_time = '{$exp_time}'
+                     WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
          $_SESSION['success_flash'] = 'Your shopping cart has been updated';
        }
       }
@@ -116,7 +129,11 @@ if($_POST['mode']){
         if($mode == 'wish' || $mode == 'wishdelete'){
          $db->query("DELETE FROM wishlist WHERE username = '{$user_name}'");
         }else{
+<<<<<<< HEAD
          $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+=======
+         $db->query("DELETE FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
          $_SESSION['total_item_ordered'] = 0;
       //setcookie(CART_COOKIE,'',1,"/",$domain,false);
        }

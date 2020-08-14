@@ -105,6 +105,10 @@ setTimeout(refresh, 10000);
  jQuery('#success').html(success);
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 jQuery(window).scroll(function(){
  if($(this).scrollTop()> 0){
    $('.navbar-fixed-top').removeClass('head-room');

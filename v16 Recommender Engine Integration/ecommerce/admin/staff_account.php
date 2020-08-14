@@ -191,7 +191,10 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
             if(check_staff_permission('pro')){
               $insertSql = "UPDATE staffs SET username ='$username1',full_name ='$name1', phone='$phone1', email ='$email1', photo ='$photopath', permissions = '$permissions1', rank = '$ranks1',last_login ='$last_login'
               WHERE id='$edit_id'";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
             }else{
               $insertSql = "UPDATE staffs SET username ='$username1',full_name ='$name1', phone='$phone1', email ='$email1', photo ='$photopath',permissions = '$permissions1',last_login ='$last_login'
               WHERE id='$edit_id'";

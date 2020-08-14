@@ -137,7 +137,10 @@ $(function() {
 });
 
 function closeModal(){
+<<<<<<< HEAD
   alert("Something went wrong");
+=======
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   jQuery('#details-modal').modal('hide');
   setTimeout(function(){
     jQuery('#details-modal').remove();

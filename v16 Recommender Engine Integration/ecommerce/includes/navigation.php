@@ -296,7 +296,11 @@ $unique_item_count =0;
 $total_item_count =0;
 $cart_exist = 0;
 if(isset($user_name)){
+<<<<<<< HEAD
 $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+=======
+$cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 $return = mysqli_num_rows($cartQ);
 if($return == 1){
 $CartResult = mysqli_fetch_assoc($cartQ);

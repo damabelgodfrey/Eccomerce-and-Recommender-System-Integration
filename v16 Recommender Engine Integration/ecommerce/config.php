@@ -8,8 +8,11 @@ define('TAXRATE',0); //SALES TAX RATE 0.01 or -0.01 (+10% or -10%)
 define('CURRENCY', 'ngn'); //CURENCY
 define('CHECKOUTMODE', 'TEST'); // change TEST to LIVE when you are ready to go LIVE
 define('TIMEZONE','Africa/Lagos');
+<<<<<<< HEAD
 define('CART_WISH_RATING',4);
 define('PURCHASE_RATING',5);
+=======
+>>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 
 // FROM STRIPE USER ACCOUNT.
 if(CHECKOUTMODE == 'TEST'){
