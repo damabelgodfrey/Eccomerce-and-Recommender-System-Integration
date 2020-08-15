@@ -275,10 +275,6 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
            $insertSql = "INSERT INTO products (`title`,`price`,`list_price`,`brand`,`categories`,`sizes`,`image`,`description`,`p_keyword`,`sold`)
             VALUES ('$title','$price','$list_price','$brand','$category','$sizes','$dbpath','$description','$p_keyword','$qtyOrdered')";
            $d_action = 'Update';
-<<<<<<< HEAD
-=======
-           $db->query($insertSql);
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
            ?>
            <div class="alert alert-success" role="alert">
            <h2>Thank you!</h2> Product added Successfully.
@@ -392,11 +388,7 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
        <!--Quantity & Sizes label -->
        <div class="form-group col-md-3">
        <label>Sizes Prices Quantity  & Threshold*:</label>
-<<<<<<< HEAD
        <button class="btn btn-default form-control" onclick="jQuery('#sizesModal').modal('toggle');return false">Enter Size Price..</button>
-=======
-       <button class="btn btn-default form-control" onclick="jQuery('#sizesModal').modal('toggle');return false">Sizes, Prices & Quantity</button>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
        </div>
        <div class ="form-group col-md-3">
          <label for="sizes">Sizes Prices Qty & Threshold Preview</label>
@@ -409,13 +401,9 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
              $imgi = 1;
              $images = explode(',',$saved_image); ?>
              <a href="products?delete_all_image=1&edit=<?=$edit_id;?>" class="text-danger"><strong>Delete All Images</strong></a><hr>
-<<<<<<< HEAD
 
              <div class="fotorama">
                <?php foreach($images as $image) : ?>
-=======
-             <?php foreach($images as $image) : ?>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
                 <div class="saved-image container col-md-3">
                 <img src="<?=$image;?>" alt="saved image"/><br><br>
                 <a href="products?delete_image=1&edit=<?=$edit_id;?>&imgi=<?=$imgi;?>" class="text-danger">Delete Image</a>
@@ -423,10 +411,7 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
                <?php
                $imgi++;
                endforeach; ?>
-<<<<<<< HEAD
                </div>
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
         <?php else:?>
           <label for="photo">Product Photo:</label>
           <input type="file" name="photo[]" id="photo" class="form-control" multiple required>
@@ -458,20 +443,13 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
     </div>
   </div><p></p>
       <!-- Sizes Modal -->
-<<<<<<< HEAD
           <div class="modal fade details-1" id="sizesModal" tabindex="-1" role="dialog" aria-labelledby="sizesModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-=======
-      <div class="modal fade" id="sizesModal" tabindex="-1" role="dialog" aria-labelledby="sizesModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 class="modal-title" id="sizesModalLabel">Size, Price & Quantity</h4>
             </div>
             <div class="modal-body">
               <div class="container-fluid">
-<<<<<<< HEAD
               <?php
               $sizerowVer = (isset($_POST['num_size'])?$sizerow:$editsizelength);
               for($i=1; $i<=$sizerowVer; $i++): ?>
@@ -495,29 +473,6 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
             </div><br>
               <?php endfor; ?>
               <span class="modal_errors" class="bg-danger"></span>
-=======
-               <span id="modal_errors" class="bg-danger"></span>
-              <?php
-              $sizerowVer = (isset($_POST['num_size'])?$sizerow:$editsizelength);
-              for($i=1; $i<=$sizerowVer; $i++): ?>
-              <div class="form-group col-md-3">
-                <label for="size<?=$i;?>">Size:</label>
-                <input type="text" name="size<?=$i;?>" id="size<?=$i;?>" value="<?=((!empty($sArray[$i-1]))?$sArray[$i-1]:'');?>"  class= "form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="price<?=$i;?>">Price:</label>
-                <input type="number" name="price<?=$i;?>" id="price<?=$i;?>" value="<?=((!empty($pArray[$i-1]))?$pArray[$i-1]:'');?>" min="0" class= "form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="qty<?=$i;?>">Quantity:</label>
-                <input type="number" name="qty<?=$i;?>" id="qty<?=$i;?>" value="<?=((!empty($qArray[$i-1]))?$qArray[$i-1]:'');?>" min="0" class= "form-control">
-              </div>
-              <div class="form-group col-md-3">
-                <label for="threshold<?=$i;?>">Threshold:</label>
-                <input type="number" name="threshold<?=$i;?>" id="threshold<?=$i;?>" value="<?=((!empty($tArray[$i-1]))?$tArray[$i-1]:'');?>" min="0" class= "form-control">
-              </div>
-              <?php endfor; ?>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
             </div>
             </div>
             <div class="modal-footer">
@@ -526,11 +481,6 @@ if(isset($_GET['add']) || isset($_GET['edit'])){
               <button type="button" class="btn btn-primary modalbtn" onclick="updateSizes();jQuery('#sizesModal').modal('toggle');return false;">Save changes</button>
             </div>
           </div>
-<<<<<<< HEAD
-=======
-        </div>
-      </div>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     <?php
   }else{
     $message = "Please! You do not have sufficient clearance to perform that action.";
@@ -612,11 +562,7 @@ if(isset($_POST['searchProduct']) && !empty($_POST['searchProduct'])) {
 }
 
 $pagConfig = array(
-<<<<<<< HEAD
     'baseURL'=>'http://localhost:81/ecommerce/admin/products',
-=======
-    'baseURL'=>'http://istore.epizy.com/ecommerce/admin/products',
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     'totalRows'=>$rowCount,
     'perPage'=>$limit
 );
@@ -775,7 +721,6 @@ jQuery('document').ready(function(){
   get_child_options('<?=$category;?>');
 });
 
-<<<<<<< HEAD
 // check the number of size rows is chosen first
   jQuery('#title').change(function(){
     var row = '<?php echo $sizerowVer; ?>';
@@ -821,8 +766,6 @@ jQuery('document').ready(function(){
     }
     jQuery('#sizes').val(sizeString);
   }
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 
 function deleletconfirm(){
   var del=confirm("Are you sure you want to delete this product?");

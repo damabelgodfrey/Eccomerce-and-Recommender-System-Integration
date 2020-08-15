@@ -29,12 +29,9 @@ if ($dmode == 'cart') {
 //$query = $db->query("SELECT * FROM products WHERE id = '{$product_id}'");
 //$product = mysqli_fetch_assoc($query);
 //function in helpers file to add product to cart.
-<<<<<<< HEAD
 ?><script>
   alert("her");
 </script><?php
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 $json_update = ''; //not applicable
 cart_wishlist_update($dmode,$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available);
  ?>

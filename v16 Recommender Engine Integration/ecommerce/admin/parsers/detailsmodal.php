@@ -93,11 +93,7 @@ $tag = $product['p_keyword'];
 
                   <div class="form-group col-xs-8">
                     <label for="description">Request:</label>
-<<<<<<< HEAD
                     <textarea type "hidden" id="request" name="request"  class="form-control" pull-left maxlength="50" placeholder="Optional! Enter preference or special request e.g fragrance, colour etc" rows="2"></textarea>
-=======
-                    <textarea id="request" name="request"  class="form-control" pull-left maxlength="50" placeholder="Optional! Enter preference or special request e.g fragrance, colour etc" rows="2"></textarea>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
                   </div>
                 </div>
                 <span class="modal_errors" class="bg-danger"></span>
@@ -140,15 +136,10 @@ $tag = $product['p_keyword'];
     </div>
 
 <?php if(is_logged_in()):
-<<<<<<< HEAD
 include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/view/collaborativeFilteringRecommendationView.php';
  endif;
  include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/view/contentBasedrecommendationView.php';
  ?>
-=======
-include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommendedProduct.php';
- endif; ?>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   </div>
 <script>
 
@@ -174,11 +165,7 @@ function closeModal(){
     jQuery('#details-modal').remove();
     jQuery('.modal.backdrop').remove();
   },50);
-<<<<<<< HEAD
   location.reload();
-=======
-    location.reload();
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 }
 
   function add_to_cart(dmode){

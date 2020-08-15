@@ -23,22 +23,15 @@ if($_POST){
   }else{}
 
 
-<<<<<<< HEAD
     //$query = $db->query("SELECT * FROM staffs WHERE email = '$email'");
     $repoObject = new UserController();
     $query =$repoObject->selectUser("staff",$email);
   //$user = mysqli_fetch_assoc($query);
     $userCount = count($query);
-=======
-    $query = $db->query("SELECT * FROM staffs WHERE email = '$email'");
-    $user = mysqli_fetch_assoc($query);
-    $userCount = mysqli_num_rows($query);
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     if($userCount == 0){
       $errors[] = 'The email provided does not exist on the system.';
       echo display_errors($errors);
     }else{
-<<<<<<< HEAD
       foreach ($query as $user) {
         if(!password_verify($password,$user['password'])){
           $errors[] = 'Email or password is incorrect';
@@ -52,18 +45,6 @@ if($_POST){
       }
       }
 
-=======
-      if(!password_verify($password,$user['password'])){
-        $errors[] = 'Email or password is incorrect';
-        echo display_errors($errors);
-      }else{
-
-      $staff_id = $user['id'];
-      $staff_username = $user['username'];
-      $staff_permission = $user['permissions'];
-      loginstaff($staff_id,$staff_username,$staff_permission);
-    }
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   }
 }
  ?>

@@ -1,6 +1,5 @@
 <?php
 include "slideCarousalScriptCss.php";
-<<<<<<< HEAD
 $obj= new cartRepoController();
 $transQ = $obj->selectAllCart();
 $results=array();
@@ -10,16 +9,6 @@ foreach($transQ as $result){
 $noOfrows = count($transQ);
 $used_ids = array();
 for($i=0;$i<$noOfrows;$i++){
-=======
-$transQ = $db->query("SELECT * FROM cart WHERE paid = 1 ORDER BY id DESC LIMIT 10");
-$results=array();
-while($row = mysqli_fetch_assoc($transQ)){
-  $results[] =$row;
-}
-$row_count = $transQ->num_rows;
-$used_ids = array();
-for($i=0;$i<$row_count;$i++){
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   $json_items = $results[$i]['items'];
   $items = json_decode($json_items,true);
   foreach ($items as $item) {

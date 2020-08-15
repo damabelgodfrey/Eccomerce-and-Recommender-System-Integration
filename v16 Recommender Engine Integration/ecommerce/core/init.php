@@ -27,10 +27,7 @@ if(isset($_SESSION['Username'])){
       if($return == 1){
       $user_data = mysqli_fetch_assoc($query);
       $email = $user_data['email'];
-<<<<<<< HEAD
     $_SESSION['user_email']=  $user_data['email'];
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
       $fn = explode(' ', $user_data['full_name']);
       $user_data['first'] = $fn[0];
         if(count($fn) < 2){

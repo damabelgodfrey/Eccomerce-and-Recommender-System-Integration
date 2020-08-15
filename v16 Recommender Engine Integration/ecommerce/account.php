@@ -18,7 +18,6 @@ if(isset($user_data['email'])){
   $errors = array();
   $successes = array();
   $ratingRun = 'false';
-<<<<<<< HEAD
   //Rate product by monitoring a rating get request from user
   if(isset($_GET['rate']) && $ratingRun == 'false'){
     $rateString = ($_GET['rate']);
@@ -34,13 +33,6 @@ if(isset($user_data['email'])){
     echo $e;
     }
 
-=======
-  if(isset($_GET['rate']) && $ratingRun == 'false'){
-    $rateString = ($_GET['rate']);
-    $rate = explode("%",$rateString);
-    RateProduct((int)$rate[0], (int)$rate[1],$user_name,"explicit");
-    $ratingRun = 'true';
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     ?>
     <script>
     //  window.location.replace("http://localhost:81/ecommerce/account");
@@ -153,10 +145,6 @@ $user = mysqli_fetch_assoc($userQuery)
           <button id="myOrders" class="glyphicon glyphicon-shopping-cart btn bg-primary"onclick="transFunction()"> Show My Orders</button><hr>
           <!--<a href="account?viewT=<?=$user['id'];?>" class="btn btn-default btn-md"><span class ="glyphicon glyphicon-shopping-cart"> View Orders</span></a><hr> -->
           <a href="account?edit=<?=$user['id'];?>" class="btn bg-primary btn-md"><span class ="glyphicon glyphicon-pencil"> Update Address</span></a>
-<<<<<<< HEAD
-=======
-
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
       </td>
       <td><?=$user['full_name'];?></td>
       <td><?=$user['email'];?></td>
@@ -227,7 +215,6 @@ $user = mysqli_fetch_assoc($userQuery)
                 <tr>
                   <td><?=$product['quantity'];?></td>
                   <td><?=$product['title'];?><br><?=$product['parent'].' ~ '.$product['child'];
-<<<<<<< HEAD
                   ?><p> <?php    $rating = new RatingController();
                         $userRating= $rating->getProductRatingForUser($product['id'], $user_name);
 
@@ -236,13 +223,6 @@ $user = mysqli_fetch_assoc($userQuery)
                     <?php }else{ ?>
                     <label class="text-warning"for="rating">Your Previous Rating:</label>
                     <?php echo $userRating; ?> <span class="fa fa-star checkedRating"> </span></p>
-=======
-                  ?><p> <?php  if(getProductRatingForUser($product['id'], $user_name) == 0) {?>
-                      <p><label class="text-info"for="rating">Please Rate Product:</label>
-                    <?php }else{ ?>
-                    <label class="text-warning"for="rating">Your Previous Rating:</label>
-                    <?php echo getProductRatingForUser($product['id'], $user_name); ?> <span class="fa fa-star checkedRating"> </span></p>
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
                       <p><label class="text-info"for="rating">Update Rating:</label>
                       <?php } ?>
                     <a onmouseover="rateChoiceOver(this)" onmouseout="rateChoiceRelease(this)" href ="account?rate=<?=$product['id'];?>%1" class= "btn btn-xs btn-default uncheckedcheckedRaing" ><span class="fa fa-star uncheckedcheckedRaing"></span><a/>

@@ -5,19 +5,12 @@
 <div class="col-md-12 text-center">&copy; Copyright 2019 <?=$globalsettings['company_name'];?></div>
 </html>
 <script type="text/javascript">
-<<<<<<< HEAD
 
 window.onload = function() {
   showAsideBtn = $('.show-side-btn'),
   showAsideBtn.click(); // this will trigger the click event
 };
 
-=======
-$(document).ready(function(){
-    $(".side-nav").hide();
-
-});
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 $(function () {
 
 'use strict';

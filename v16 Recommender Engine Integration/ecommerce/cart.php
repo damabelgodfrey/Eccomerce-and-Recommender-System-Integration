@@ -26,21 +26,12 @@ if(isset($_GET['deleted']) && !empty($_GET['deleted'])){
     $message = 'Discount removed successfully.';
     succes_redirect('cart',$message);
 }
-<<<<<<< HEAD
 $cartRepObj= new cartRepoController();
 if(isset($user_name)){
   $cartRepObj = new CartRepoController();
   $cartQ = $cartRepObj->selectCart($user_name);
 
 $return = count($cartQ);
-=======
-if(isset($user_name)){
-$paid = 0;
-$cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
-$return = mysqli_num_rows($cartQ);
-
-//
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
   if($return != 1){
     $_SESSION['total_item_ordered'] = 0;
     if(isset($_SESSION['discount'])){
@@ -60,17 +51,11 @@ $return = mysqli_num_rows($cartQ);
     <?php
   }else{
     $formid = md5(rand(0,10000000));
-<<<<<<< HEAD
     foreach ($cartQ as $CartResult) {
       $MyCart_id = (int)$CartResult['id'];
       $items = json_decode($CartResult['items'],true);
     }
 
-=======
-    $CartResult = mysqli_fetch_assoc($cartQ);
-    $MyCart_id = $CartResult['id'];
-    $items = json_decode($CartResult['items'],true);
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     $i = 1;
     $sub_total = 0;
     $item_count = 0;
@@ -92,7 +77,6 @@ $return = mysqli_num_rows($cartQ);
         <div class=" text-center">
           <?php
             $itemcount = count($items);
-<<<<<<< HEAD
             $CartRepObj = new ProductController();
             foreach($items as $item){
               $product_id =$item['id'];
@@ -101,15 +85,6 @@ $return = mysqli_num_rows($cartQ);
               if(count($productQ) > 0){
               foreach ($productQ as $product ) {
               $sizes = sizesToArray($product['sizes']);
-=======
-            foreach($items as $item){
-              $product_id =$item['id'];
-              $itemcheck =1;
-              $productQ = $db->query("SELECT * FROM products WHERE id = '{$product_id}'");
-              if(mysqli_num_rows($productQ) > 0){
-              $product = mysqli_fetch_assoc($productQ);
-              $sizes = sizesToArray($product['sizes']); //function in helper file
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
               foreach($sizes as $size){
                   if($size['size'] == $item['size']){
                     $available = (int)$size['quantity'];
@@ -199,12 +174,9 @@ $return = mysqli_num_rows($cartQ);
               $sub_total += ($item['price'] * $item['quantity']);
             }
           }
-<<<<<<< HEAD
         //////
 
           }
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
             $expireflag=0;
               if (TAXRATE == 0) {
                 $grand_total = $sub_total;

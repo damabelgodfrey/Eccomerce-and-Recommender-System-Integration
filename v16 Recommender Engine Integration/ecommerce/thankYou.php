@@ -9,11 +9,7 @@ $successes = array();
 $errors = array();
 if (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"]){
 $paid = 0;
-<<<<<<< HEAD
 $itemQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
-=======
-$itemQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
 $return = mysqli_num_rows($itemQ);
   if($return == 1){
     $results = mysqli_fetch_assoc($itemQ);
@@ -88,13 +84,10 @@ $return = mysqli_num_rows($itemQ);
       $newSizes = array();
       $qtyOrdered = array();
       $item_id = $item['id'];
-<<<<<<< HEAD
       //RateProduct($item_id, 5,$user_name,'purchase'); //rate all purchace product(s)
       $rating = new RatingController();
       $rating->RateProduct($item_id, 5,$user_name,'purchase');
 
-=======
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
       $productQ = $db->query("SELECT sizes,sold FROM products WHERE id='{$item_id}'");
       $product = mysqli_fetch_assoc($productQ);
       $sizes = sizesToArray($product['sizes']); //function in helper file
@@ -124,11 +117,7 @@ $return = mysqli_num_rows($itemQ);
       }
 
     //update cart
-<<<<<<< HEAD
     $db->query("DELETE cart WHERE username = '{$user_name}'");
-=======
-    $db->query("UPDATE cart SET paid = 1 WHERE username = '{$user_name}' AND paid = '{$paid}'");
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
     if(isset($_POST['instorePurchase'])){
       $db->query("INSERT INTO transactions
       (charge_id,cart_id,full_name,email,phone,street,street2,city,state,zip_code,country,items,sub_total,tax,discount,grand_total,description,txn_type,txn_date) VALUES

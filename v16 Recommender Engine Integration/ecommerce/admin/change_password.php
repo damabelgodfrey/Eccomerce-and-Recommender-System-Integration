@@ -215,12 +215,8 @@ if($_POST){
     echo display_errors($errors);
   }else {
     //change password
-<<<<<<< HEAD
         $repoObj= new UserController();
         $repoObj->updatepassword('staff',$new_hashed,$user_id);
-=======
-        $db->query("UPDATE users SET password = '$new_hashed' WHERE id = '$user_id'");
->>>>>>> 00946282fd0ced214a37681e144e38779b687dd4
         $_SESSION['success_flash'] = 'Your password has been updated!';
         header('Location: index.php');
       }
