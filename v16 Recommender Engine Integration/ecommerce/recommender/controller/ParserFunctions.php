@@ -11,86 +11,23 @@ function FinalCompositePrediction($recommendedArrayCF,$recommendedArrayCSimilair
     if(array_key_exists($key,$recommendedArrayCF)){
       $y = $value * $CSimScore;
       $x = $recommendedArrayCF[$key] * $CFW;
-      $finalCPrediction[$key] = $y+ $x;
+      $finalCPrediction[$key] = to2Decimal($y+ $x);
     }
   }
   arsort($finalCPrediction);
   return $finalCPrediction;
 }
 
-//uses several algoriths to compute item similarity using specified features
-//Product title, product descripted and product tag
-function computeItemSimilarityCoefficient($CFArray, $clickedP_id){
-  $product = new ProductController();
-if(count($CFArray)!=0){
-    $OtherProductQuery = $product->getRecommendedCProduct($CFArray);
-}else{
-  $OtherProductQuery = $product->getAllProducts();
-}
-  // get all product in this array $CFArray
-
-  $productQuery = $product->getProduct($clickedP_id);
-  $recommendedArray = array();
-  $stopWord = getStopwordsFromFile();
-  foreach ($productQuery as $product) {
-    //request $synonymsArray
-    $noOfSynonysPerword= 2;
-    $tags =DictionaryLookUp::requestAllSynonyms($product['p_keyword'],$noOfSynonysPerword);
-  //  $item1= processContent($stopWord, $product['title'].' '.$product['description'].' '.$tags);
-   // for weighted product property input
-     $thisItemProperties= processContent($stopWord, $product['title'].' '.$product['description']);
-     $thisItemTags= processContent($stopWord, $tags);
-  //end
-  }
-
-  if(is_logged_in()){
-  $user_email =   $_SESSION['user_email'];
-    $transObj = new TransactionController();
-    $idArray = $transObj->getUserTransactions($user_email);
-    }
-    foreach ($OtherProductQuery as $otherProduct) {
-       $otherProductID=  $otherProduct['id'];
-       $condition = 0;
-      if(is_logged_in()){
-          if($otherProductID != $clickedP_id && !array_key_exists($otherProductID,$idArray)){
-            $condition = 1;
-          }
-      }else{
-        if($otherProductID != $clickedP_id){
-          $condition = 1;
-        }
-      }
-      if($condition ==1){ //remove all product brought by users if logged in and the current clicked product
-       //$item2 = processContent($stopWord, $otherProduct['title'].' '.$otherProduct['description'].' '.$otherProduct['p_keyword']);
-       //for weighted product property input
-       $otherItemProperties= processContent($stopWord, $otherProduct['title'].' '.$otherProduct['description']);
-       $otherItemTags= processContent($stopWord, $otherProduct['p_keyword']);
-       $p_aveRating = (double)$otherProduct['product_average_rating'];
-
-      //$result = LevenshteinDistance::getLevenshteinDistance($item1, $item2);
-      //$result = levenshtein($item1, $item2);
-      //$result = JaccardSimilarity::getJaccardSimilarityCoefficient( $item1, $item2);
-     //$result = ContentBased_CosineSimilarity::getCBConsineSimilarity($item1, $item2);
-     //$result = ContentBased_CosineSimilarity::getCBCosineRatingSimilarityWeighted($item1, $item2,$p_aveRating);
-     $result = ContentBased_CosineSimilarity::getCBCosineSimilarityRatingTagWeighted($thisItemProperties, $thisItemTags,$otherItemProperties, $otherItemTags,$p_aveRating);
-      if($result != 0){
-        $recommendedArray1[$otherProduct['id'].' '.$otherProduct['title']] = $result; //send to file
-        $recommendedArray[$otherProduct['id']] = $result;
-      }
-      }
-  }
-  arsort($recommendedArray1);
-  debugfilewriter("\nContent Based Similarity\n");
-  debugfilewriter($recommendedArray1);
-  arsort($recommendedArray);
-  return $recommendedArray;
-}
 //write output to file
 function debugfilewriter($result2file){
   $mystopwordFile = $_SERVER['DOCUMENT_ROOT']."/ecommerce/files/debuggerfile.txt";
   file_put_contents($mystopwordFile, print_r($result2file, true), FILE_APPEND | LOCK_EX);
 }
 
+//return number in two decimal places
+function to2Decimal($value){
+  return sprintf('%0.2f', $value);
+}
 
 //read stopword from file to array
 function getStopwordsFromFile(){
@@ -106,7 +43,7 @@ function getStopwordsFromFile(){
   fclose($file_handle);
   return $stopword_array;
 }
-// remove common word and reduce word to their core root
+// remove common word and reduce words to their core root
 function processContent($stopword_array,$contentAtribute){
   $prepare_content = preg_split('/[^[:alnum:]]+/', strtolower($contentAtribute));
   $item_string =implode(' ', array_unique($prepare_content));
@@ -118,6 +55,12 @@ function processContent($stopword_array,$contentAtribute){
     $stemmed_parts[] = $stemmed_word;
   }
   return implode(' ', $stemmed_parts);
+}
+
+//get script run tie and system usage
+function rutime($ru, $rus, $index) {
+    return ($ru["ru_$index.tv_sec"]*1000 + intval($ru["ru_$index.tv_usec"]/1000))
+     -  ($rus["ru_$index.tv_sec"]*1000 + intval($rus["ru_$index.tv_usec"]/1000));
 }
 //
 // function predict ( $userID , $itemID ) {

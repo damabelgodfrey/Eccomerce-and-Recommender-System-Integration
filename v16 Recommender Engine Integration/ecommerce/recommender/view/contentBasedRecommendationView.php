@@ -1,6 +1,7 @@
 <?php
 $EmptyArray = array();
-$recommendedArray = computeItemSimilarityCoefficient($EmptyArray,$id);
+$simAlgorithm ="CosineSimilarityRatingTagWeighted";
+$recommendedArray = ItemFeatureSimComputation::getFeatureSimCoefficient($simAlgorithm,$EmptyArray,$id);
 $obj = new ProductController();
 $recommended = $obj->getRecommendedCProduct($recommendedArray); //fetch product recommended
 $return = count($recommended);

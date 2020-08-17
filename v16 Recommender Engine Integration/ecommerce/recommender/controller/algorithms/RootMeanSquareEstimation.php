@@ -5,7 +5,6 @@
  */
 class RootMeanSquareEstimation
 {
-
   public static function getRatingProduct($productid,$predictedRating){
     $productObj = new ProductController();
     $productInf =$productObj->getProduct($productid);

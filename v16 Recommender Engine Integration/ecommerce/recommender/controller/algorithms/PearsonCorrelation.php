@@ -46,6 +46,7 @@ class PearsonCorrelation
     if(count($user1metrix) ==0){
       return 0;
     }
+
     $user1MeanRating = array_sum($user1metrix)/count($user1metrix);
     $user2MeanRating = array_sum($user2metrix)/count($user2metrix);
    $diffprod=0;$xdiff2=0;$ydiff2=0;
@@ -62,6 +63,7 @@ class PearsonCorrelation
     if($b == 0){
       return 0;
     }
+  var_dump($diffprod/$b.$Users2);
     return $diffprod/$b;
   }
 }

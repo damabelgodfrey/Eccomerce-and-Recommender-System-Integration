@@ -2,7 +2,7 @@
 /**
  *
  */
-class CollaboratingF_CosineSimilarity 
+class CF_CosineSimilarity 
 {
   //compute cosine similarity using user rating
   public static function computeF_CosineSimilarity($matrix,$user1,$Users2){

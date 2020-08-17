@@ -1,11 +1,42 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserItemRatingMatrix.php';
-$userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix();
-$recommendedArrayCF = CollaborativeRatingPrediction::getPredict($userItemRatingMatrix, $user_name);
-$recommendedArrayCSimilairity =computeItemSimilarityCoefficient($recommendedArrayCF,$id);//compute content similarity between predicted user item and clicked product
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemFeatureSimComputation.php';
+ $predictionFlag =0;
+ $finalPredictionArray = array();
+ $rObj= new RatingController();
+ $userRating = $rObj->getRatings($user_name);
+ $today = date("Y-m-d");
+ if(count($userRating)==1){
+   if($userRating[0]['cf_last_updated'] == $today){ //Runs prediction once per day
+     $predictionFlag =1;
+   }
+ }
+ if($predictionFlag == 1){
+   foreach ($userRating as $rating) {
+     $predictions = json_decode($rating['predicted_rating'],true);
+     foreach ($predictions as $key => $prediction){
+      $finalPredictionArray[$prediction['product_id']] = $prediction['predict_rating'];
+     }
+   }
+ }else{
+  $userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix();
+  $simAlgorithm = "CosineSimilarity";
+  $A1 = CollaborativeRatingPredictionA1::getPredict($simAlgorithm,$userItemRatingMatrix, $user_name);
+  $A2 = CollaborativeRatingPredictionA2::getPredict($simAlgorithm,$userItemRatingMatrix, $user_name);
+  foreach ($A1 as $key => $value) {
+    $finalPredictionArray[$key]= to2Decimal(($value + $A2[$key])/2);
+  }
+  debugfilewriter($A1);
+  debugfilewriter($A2);
+  debugfilewriter($finalPredictionArray);
+  $rObj2 = new RatingController();
+  $rObj2->insertCFComputation("prediction", $user_name, $finalPredictionArray);
+}
+$simAlgorithm ="CosineSimilarityRatingTagWeighted";
+$recommendedArrayCSimilairity =ItemFeatureSimcomputation::getFeatureSimCoefficient($simAlgorithm,$finalPredictionArray,$id);//compute content similarity between predicted user item and clicked product
 
-$displayFinalPredict = FinalCompositePrediction($recommendedArrayCF,$recommendedArrayCSimilairity);
-debugfilewriter($recommendedArrayCF);
+$displayFinalPredict = FinalCompositePrediction($finalPredictionArray,$recommendedArrayCSimilairity);
+debugfilewriter($finalPredictionArray);
 debugfilewriter($recommendedArrayCSimilairity);
 debugfilewriter($displayFinalPredict);
 $obj = new ProductController();
@@ -15,7 +46,7 @@ $return = count($recommended);
 if($return > 0){ ?>
         <div class="col-md-12">
         <div class="panel panel-default">
-        <div class="panel-heading text-center"><h3>⇩ Fiinal recommendation ⇩</h3>
+        <div class="panel-heading text-center"><h3>⇩ Final recommendation ⇩</h3>
         </div>
         <div class="panel-body">
             <div class="posts_list">
@@ -61,7 +92,7 @@ if($return > 0){ ?>
 <?php } ?>
 <?php
 $obj = new ProductController();
-$recommended = $obj->getRecommendedCProduct($recommendedArrayCF);
+$recommended = $obj->getRecommendedCProduct($finalPredictionArray);
 //$recommended = getRecommendedProduct($db,$recommendedArray);
 $return = count($recommended);
 if($return > 0){ ?>

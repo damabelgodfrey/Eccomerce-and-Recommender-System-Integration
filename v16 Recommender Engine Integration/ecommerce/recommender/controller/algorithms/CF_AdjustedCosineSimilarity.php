@@ -1,5 +1,5 @@
 <?php
-class CollaboratingF_AdjustedCosineSimilarity{
+class CF_AdjustedCosineSimilarity{
 
   public static function conputeF_adjustedCosineSimilarity($matrix,$user1,$Users2){
       $user1metrix =array();

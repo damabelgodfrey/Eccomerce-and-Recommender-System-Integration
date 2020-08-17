@@ -2,18 +2,21 @@
 //require_once '../core/init';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/includes/PorterStemmer.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/DictionaryLookUp.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ContentBased_CosineSimilarity.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPrediction.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA1.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA2.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RatingController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ProductController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/TransactionController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/WishListRepoController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/JaccardSimilarity.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/LevenshteinDistance.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/cartRepoController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ParserFunctions.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RootMeanSquareEstimation.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/RootMeanSquareEstimation.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/ContentBased_CosineSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/JaccardSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/LevenshteinDistance.php';
+
+
 
 
 // function to pass in an array of errors style in bootstrap for errors

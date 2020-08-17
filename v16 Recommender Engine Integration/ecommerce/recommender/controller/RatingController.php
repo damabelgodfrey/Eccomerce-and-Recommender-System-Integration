@@ -90,4 +90,46 @@ public  function computeProductAverageRating($product_id){
      }
     }
   }
-} ?>
+
+  public function insertCFComputation($type, $user, $CF){
+    $ratingQ = $this->getRatings($user);
+    $ratingExistCheck = count($ratingQ);
+    if($ratingExistCheck == 1){
+      $y = array();
+      foreach ($CF as $key => $value) {
+        switch ($type) {
+          case 'prediction':
+          $predicted_rating[] = array(
+              'product_id'       => $key,
+              'predict_rating' => $value,
+            );
+            $y = $predicted_rating;
+            break;
+          case 'similarity':
+          $userID = $this->getUserID($key);
+
+            $neibourhood_ranking[] = array(
+              'user_id'          => $userID,
+              'sim_score' => $value,
+            );
+            $y = $neibourhood_ranking;
+            break;
+
+          default:
+            // code...
+            break;
+        }
+      }
+      $CFC = json_encode($y);
+      $updated_time = date("Y-m-d");
+      if($type == "similarity"){
+        $sql ="UPDATE ratings SET neigbourhood_ranking = ?, cf_last_updated = ? WHERE username = ?";
+      }else{
+        $sql ="UPDATE ratings SET predicted_rating = ?, cf_last_updated = ? WHERE username = ?";
+      }
+      $this->updateRatings($sql,$CFC,$updated_time, $user);
+  }else{
+      //update
+    }
+  }
+}
