@@ -15,6 +15,12 @@ class UserController extends Users
    $myQuerry = $this->setUserLogin($sql,$date,$user_username);
   }
 
+  public function requestUserID($username){
+    $sql = "SELECT * FROM customer_user WHERE username =?";
+    $result = $this->getUserID($username,$sql);
+    return $result;
+
+  }
   public function selectUser($userType,$email){
     if($userType == "customer"){
       $sql ="SELECT * FROM customer_user WHERE email = '$email'";

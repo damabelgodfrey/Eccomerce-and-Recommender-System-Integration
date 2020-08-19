@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Hide the contents of directories
+IndexIgnore *
+# Hide files of type .png, .zip, .jpg, .gif and .doc from listing
+IndexIgnore *.png *.zip *.jpg *.gif *.doc

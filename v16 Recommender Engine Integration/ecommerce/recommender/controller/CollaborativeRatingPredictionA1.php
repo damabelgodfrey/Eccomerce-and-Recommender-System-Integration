@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algori
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_CosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_AdjustedCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/PearsonCorrelation.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RatingController.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/PredictionController.php';
 /**
  *
  */
@@ -17,7 +17,6 @@ class CollaborativeRatingPredictionA1
   public static function getPredict($simAlgorithm,$allUserMatrix, $currentUser){
     self:: $sim_Rating_product = array();
     self::$simSummation =array();
-    $rustart = getrusage();
     $UserSiilarityArr = array();
     foreach($allUserMatrix as $otherUser =>$value){
       if($otherUser !=$currentUser){
@@ -42,16 +41,13 @@ class CollaborativeRatingPredictionA1
             break;
         }
       self::prediction($allUserMatrix,$currentUser,$otherUser);
-      debugfilewriter("\nUser Similarity Coefficient A2".' '.$otherUser.' '.self::$similarity);
+      debugfilewriter("\nUser Similarity Coefficient A1".' '.$otherUser.' '.self::$similarity);
       $UserSiilarityArr[$otherUser] = self::$similarity;
       }
     }
     $A1 = self::computeRatingPrediction();
-    $SC = new RatingController();
+    $SC = new PredictionController();
     $SC->insertCFComputation("similarity", $currentUser, $UserSiilarityArr);
-    $ru = getrusage();
-    echo "This process used " . rutime($ru, $rustart, "utime") ." ms for its computations\n";
-    echo "It spent " . rutime($ru, $rustart, "stime") ." ms in system calls\n";
   return $A1;
    }
    // compute the summation of the product of other user rating and similarity between this user and other user

@@ -1,25 +1,27 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserItemRatingMatrix.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemFeatureSimComputation.php';
+ $itemUserCF = ItemBasedCollaborativeFiltering::computeItemSimilarity($user_name);
  $predictionFlag =0;
  $finalPredictionArray = array();
- $rObj= new RatingController();
- $userRating = $rObj->getRatings($user_name);
+ $pObj= new PredictionController();
+ $prediction = $pObj->getPrediction($user_name);
  $today = date("Y-m-d");
- if(count($userRating)==1){
-   if($userRating[0]['cf_last_updated'] == $today){ //Runs prediction once per day
+ if(count($prediction)==0){
+   if($prediction[0]['user_based_last_updated'] == $today){ //Runs prediction once per day
      $predictionFlag =1;
    }
  }
  if($predictionFlag == 1){
-   foreach ($userRating as $rating) {
-     $predictions = json_decode($rating['predicted_rating'],true);
+   foreach ($prediction as $predict) {
+     $predictions = json_decode($predict['user_based_predicted'],true);
      foreach ($predictions as $key => $prediction){
       $finalPredictionArray[$prediction['product_id']] = $prediction['predict_rating'];
      }
    }
  }else{
-  $userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix();
+   $type = "AllUser";
+  $userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix($type,$user_name);
   $simAlgorithm = "CosineSimilarity";
   $A1 = CollaborativeRatingPredictionA1::getPredict($simAlgorithm,$userItemRatingMatrix, $user_name);
   $A2 = CollaborativeRatingPredictionA2::getPredict($simAlgorithm,$userItemRatingMatrix, $user_name);
@@ -29,8 +31,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemFe
   debugfilewriter($A1);
   debugfilewriter($A2);
   debugfilewriter($finalPredictionArray);
-  $rObj2 = new RatingController();
-  $rObj2->insertCFComputation("prediction", $user_name, $finalPredictionArray);
+  $pObj2 = new PredictionController();
+  $pObj2->insertCFComputation("userBasedCF", $user_name, $finalPredictionArray);
 }
 $simAlgorithm ="CosineSimilarityRatingTagWeighted";
 $recommendedArrayCSimilairity =ItemFeatureSimcomputation::getFeatureSimCoefficient($simAlgorithm,$finalPredictionArray,$id);//compute content similarity between predicted user item and clicked product
@@ -40,7 +42,7 @@ debugfilewriter($finalPredictionArray);
 debugfilewriter($recommendedArrayCSimilairity);
 debugfilewriter($displayFinalPredict);
 $obj = new ProductController();
-$recommended = $obj->getRecommendedCProduct($displayFinalPredict);
+$recommended = $obj->requestGroupProduct($displayFinalPredict);
 //$recommended = getRecommendedProduct($db,$recommendedArray);
 $return = count($recommended);
 if($return > 0){ ?>
@@ -92,7 +94,7 @@ if($return > 0){ ?>
 <?php } ?>
 <?php
 $obj = new ProductController();
-$recommended = $obj->getRecommendedCProduct($finalPredictionArray);
+$recommended = $obj->requestGroupProduct($finalPredictionArray);
 //$recommended = getRecommendedProduct($db,$recommendedArray);
 $return = count($recommended);
 if($return > 0){ ?>

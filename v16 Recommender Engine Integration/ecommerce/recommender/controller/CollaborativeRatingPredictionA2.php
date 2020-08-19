@@ -46,11 +46,11 @@ class CollaborativeRatingPredictionA2
       $UserSimilarityArr[$otherUser]= self::$similarity;
       }
     }
-     $A1 =self::computeRatingPrediction();
+     $A2 =self::computeRatingPrediction();
      $ru = getrusage();
      echo "This process used " . rutime($ru, $rustart, "utime") ." ms for its computations\n";
      echo "It spent " . rutime($ru, $rustart, "stime") ." ms in system calls\n";
-     return $A1;
+     return $A2;
   }
   public static function computeRatingPrediction(){
     $itemRatingPredictionArray = array();

@@ -6,18 +6,20 @@ class ItemFeatureSimComputation
 {
   //uses several algoriths to compute item similarity using specified features
   //Product title, product descripted and product tag
-  public static function getFeatureSimCoefficient($simAlgorithm,$CFArray,$clickedP_id){
+  //rankes all items by similarity score against current item id.
+  public static function getFeatureSimCoefficient($simAlgorithm,$CFArray,$P_id,$rating=0){
     $product = new ProductController();
   if(count($CFArray)!=0){
-      $OtherProductQuery = $product->getRecommendedCProduct($CFArray);
+      $OtherProductQuery = $product->requestGroupProduct($CFArray);
   }else{
     $OtherProductQuery = $product->getAllProducts();
   }
-    $productQuery = $product->getProduct($clickedP_id);
+    $productQuery = $product->getProduct($P_id);
     $recommendedArray = array();
     $stopWord = getStopwordsFromFile();
     foreach ($productQuery as $product) {
       $noOfSynonysPerword= 2;
+      $p1_aveRating = (double)$product['product_average_rating'];
       $tags =DictionaryLookUp::requestAllSynonyms($product['p_keyword'],$noOfSynonysPerword);
     //  $thisItemFeatures= processContent($stopWord, $product['title'].' '.$product['description'].' '.$tags);
        $thisItemFeatures= processContent($stopWord, $product['title'].' '.$product['description']);
@@ -33,11 +35,11 @@ class ItemFeatureSimComputation
          $otherProductID=  $otherProduct['id'];
          $condition = 0;
         if(is_logged_in()){
-            if($otherProductID != $clickedP_id && !array_key_exists($otherProductID,$idArray)){
+            if($otherProductID != $P_id && !array_key_exists($otherProductID,$idArray)){
               $condition = 1;
             }
         }else{
-          if($otherProductID != $clickedP_id){
+          if($otherProductID != $P_id){
             $condition = 1;
           }
         }
@@ -46,7 +48,7 @@ class ItemFeatureSimComputation
          //for weighted product property input
          $otherItemFeatures= processContent($stopWord, $otherProduct['title'].' '.$otherProduct['description']);
          $otherItemTags= processContent($stopWord, $otherProduct['p_keyword']);
-         $p_aveRating = (double)$otherProduct['product_average_rating'];
+         $p2_aveRating = (double)$otherProduct['product_average_rating'];
 
 
         switch ($simAlgorithm) {
@@ -61,11 +63,11 @@ class ItemFeatureSimComputation
             $result = ContentBased_CosineSimilarity::getCBConsineSimilarity($thisItemFeatures, $otherItemFeatures);
             break;
           case 'CosineRatingSimilarityWeighted':
-            $result = ContentBased_CosineSimilarity::getCBCosineRatingSimilarityWeighted($item1, $item2,$p_aveRating);
+            $result = ContentBased_CosineSimilarity::getCBCosineRatingSimilarityWeighted($item1, $item2,$p2_aveRating);
             break;
           case 'CosineSimilarityRatingTagWeighted':
             $result = ContentBased_CosineSimilarity::getCBCosineSimilarityRatingTagWeighted($thisItemFeatures, $thisItemTags,
-                                                                                       $otherItemFeatures, $otherItemTags,$p_aveRating);
+                                                                             $otherItemFeatures, $otherItemTags,$p2_aveRating);
             break;
           default:
             break;

@@ -29,6 +29,14 @@ function to2Decimal($value){
   return sprintf('%0.2f', $value);
 }
 
+//get getrusage
+function my_getrusage($rustart,$rend){
+  $rustart = getrusage();
+  $rend = getrusage();
+  echo "This process used " . rutime($rend, $rustart, "utime") ." ms for its computations\n";
+  echo "It spent " . rutime($rend, $rustart, "stime") ." ms in system calls\n";
+}
+
 //read stopword from file to array
 function getStopwordsFromFile(){
   $mystopwordFile = $_SERVER['DOCUMENT_ROOT']."/ecommerce/files/stopwords.txt";

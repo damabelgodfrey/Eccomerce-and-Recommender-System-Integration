@@ -4,9 +4,13 @@
  */
 class UserItemRatingMatrix {
 
-  public static function createRatingMatrix(){
+  public static function createRatingMatrix($type,$userName){
      $ratingCObj = new RatingController();
-     $allRatingsQ = $ratingCObj->getAllRatings();
+     if ($type =='AllUser') {
+       $allRatingsQ = $ratingCObj->getAllRatings();
+     }else{
+       $allRatingsQ = $ratingCObj->getRatings($userName);
+     }
      $matrix = array();
      foreach($allRatingsQ as $allRatings){
        $userRatings = $allRatings['product_rating'];

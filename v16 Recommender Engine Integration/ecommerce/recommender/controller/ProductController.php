@@ -10,7 +10,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/Model/Products.ph
     }
 
     // display recommended product on ecommerce
-    public function getRecommendedCProduct($recommendedArray){
+    public function requestGroupProduct($recommendedArray){
     $productIDs = array();
      foreach($recommendedArray as $item =>$predictionValue){
      if($predictionValue > 0.01 && (int)sanitize($_POST['id']) != $item){

@@ -17,16 +17,6 @@ class Ratings extends DBh{
     return $results;
   }
 
-  public function getUserID($username){
-    $sql = "SELECT * FROM ratings WHERE username =?";
-    $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$username]);
-    $results = $myQuerry->fetchAll();
-    foreach ($results as $key) {
-    $id =  $key['id'];
-    }
-    return $id;
-  }
   protected function setRatings($sql,$user_name,$updated_time,$rating_json){
     $myQuerry = $this->getConnection()->prepare($sql);
     $myQuerry->execute([$user_name,$updated_time,$rating_json]);

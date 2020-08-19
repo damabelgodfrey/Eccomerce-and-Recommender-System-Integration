@@ -5,6 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/Dictio
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA1.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA2.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RatingController.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemBasedCollaborativeFiltering.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ProductController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/TransactionController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/WishListRepoController.php';

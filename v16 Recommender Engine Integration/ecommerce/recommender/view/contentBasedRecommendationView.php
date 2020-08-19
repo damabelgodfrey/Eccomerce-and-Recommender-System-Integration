@@ -3,7 +3,7 @@ $EmptyArray = array();
 $simAlgorithm ="CosineSimilarityRatingTagWeighted";
 $recommendedArray = ItemFeatureSimComputation::getFeatureSimCoefficient($simAlgorithm,$EmptyArray,$id);
 $obj = new ProductController();
-$recommended = $obj->getRecommendedCProduct($recommendedArray); //fetch product recommended
+$recommended = $obj->requestGroupProduct($recommendedArray); //fetch product recommended
 $return = count($recommended);
 if($return > 0){ ?>
         <div class="col-md-12">
