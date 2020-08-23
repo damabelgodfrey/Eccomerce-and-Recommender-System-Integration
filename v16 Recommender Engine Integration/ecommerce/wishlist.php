@@ -21,14 +21,14 @@ include 'includes/head.php';
 include 'includes/navigation.php';
 $werrors = array();
 if(isset($user_name)){
-$wish = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
+$wish = $db->query("SELECT * FROM wishlist WHERE userID = '{$user_id}'");
 //$wish = $db->query("SELECT * FROM cart WHERE username = '{$user_name}' AND paid = '{$paid}'");
 $returnW = mysqli_num_rows($wish);
   if($returnW != 1){
     $werrors[] ="Wish List empty";
   }else{
     $resultW = mysqli_fetch_assoc($wish);
-    $wishItem_id = $resultW['id'];
+    $wishItem_id = $resultW['userID'];
     $wishitems = json_decode($resultW['items'],true);
     $w_i = 1;
     $w_sub_total = 0;
@@ -122,7 +122,7 @@ $returnW = mysqli_num_rows($wish);
             ?>
           </div><hr> <?php
           }else{
-            $db->query("DELETE FROM wishlist WHERE username = '{$user_name}'");
+            $db->query("DELETE FROM wishlist WHERE userID = '{$user_id}'");
           }
         }
         ?>

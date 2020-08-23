@@ -25,9 +25,9 @@ if(isset($user_data['email'])){
     try {
       $P_rateID = sanitize((int)$rate[0]);
       $P_ratingValue = sanitize((int)$rate[1]);
-      //RateProduct($P_rateID,$P_ratingValue ,$user_name,"explicit");
+      //RateProduct($P_rateID,$P_ratingValue ,$user_id,"explicit");
       $rating = new RatingController();
-      $rating->RateProduct($P_rateID, $P_ratingValue,$user_name,'explicit');
+      $rating->RateProduct($P_rateID, $P_ratingValue,$user_id,'explicit');
       $ratingRun = 'true';
     } catch (\Exception $e) {
     echo $e;
@@ -216,9 +216,8 @@ $user = mysqli_fetch_assoc($userQuery)
                   <td><?=$product['quantity'];?></td>
                   <td><?=$product['title'];?><br><?=$product['parent'].' ~ '.$product['child'];
                   ?><p> <?php    $rating = new RatingController();
-                        $userRating= $rating->getProductRatingForUser($product['id'], $user_name);
-
-                  if(count($userRating) == 0) {?>
+                        $userRating= $rating->getProductRatingForUser($product['id'], $user_id);
+                  if($userRating == 0) {?>
                       <p><label class="text-info"for="rating">Please Rate Product:</label>
                     <?php }else{ ?>
                     <label class="text-warning"for="rating">Your Previous Rating:</label>

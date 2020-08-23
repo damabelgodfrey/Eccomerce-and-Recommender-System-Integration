@@ -6,35 +6,37 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/Model/Users.php';
 
 class UserController extends Users
 {
-  public function updateUserLogin($userType,$date,$user_username){
+  public function updateUserLogin($userType,$date,$user_id){
     if($userType == "customer"){
-     $sql ="UPDATE customer_user SET last_login = ? WHERE username = ?";
+     $sql ="UPDATE customer_user SET last_login = ? WHERE userID = ?";
     }else{
     $sql ="UPDATE staffs SET last_login = ? WHERE username = ?";
     }
-   $myQuerry = $this->setUserLogin($sql,$date,$user_username);
+   $myQuerry = $this->setUserLogin($sql,$date,$user_id);
   }
-
-  public function requestUserID($username){
-    $sql = "SELECT * FROM customer_user WHERE username =?";
-    $result = $this->getUserID($username,$sql);
-    return $result;
-
-  }
-  public function selectUser($userType,$email){
+  public function selectUser($userType,$user_id){
     if($userType == "customer"){
-      $sql ="SELECT * FROM customer_user WHERE email = '$email'";
+      $sql ="SELECT * FROM customer_user WHERE id = ?";
     }else{
-      $sql ="SELECT * FROM staffs WHERE email = '$email'";
+      $sql ="SELECT * FROM staffs WHERE id = ?";
     }
-    return $this->getUser($sql,$email);
+     return $this->getUser($sql,$user_id);
   }
 
+public function selectUserByEmail($userType,$email){
+  if($userType == "customer"){
+    $sql ="SELECT * FROM customer_user WHERE email = ?";
+  }else{
+    $sql ="SELECT * FROM staffs WHERE email = ?";
+  }
+   $f = $this->getUserByEmail($sql,$email);
+   return $f;
+}
   public function updatepassword($userType, $new_hashedpwd,$user_id){
     if($userType == "customer"){
-      $sql = "UPDATE users SET password = '$new_hashed' WHERE id = '$user_id'";
+      $sql = "UPDATE customer_user SET password = '$new_hashed' WHERE id = ?";
     }else{
-      $sql = "UPDATE users SET password = '$new_hashed' WHERE id = '$user_id'";
+      $sql = "UPDATE staff SET password = '$new_hashed' WHERE id = ?";
     }
     $this->setPassword($sql,$new_hashedpwd,$user_id);
   }

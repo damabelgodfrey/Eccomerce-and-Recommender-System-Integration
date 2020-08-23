@@ -1,5 +1,5 @@
 <?php
-$transQ = $db->query("SELECT * FROM cart WHERE paid = 1 ORDER BY id DESC LIMIT 3");
+$transQ = $db->query("SELECT * FROM cart ORDER BY id DESC LIMIT 3");
 $results=array();
 while($row = mysqli_fetch_assoc($transQ)){
   $results[] =$row;

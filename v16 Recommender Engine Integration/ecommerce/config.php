@@ -10,6 +10,8 @@ define('CHECKOUTMODE', 'TEST'); // change TEST to LIVE when you are ready to go 
 define('TIMEZONE','Africa/Lagos');
 define('CART_WISH_RATING',4);
 define('PURCHASE_RATING',5);
+$today =date("Y-m-d");
+define('RECOMMENDER_ENGINE_INTERVAL',$today);
 
 // FROM STRIPE USER ACCOUNT.
 if(CHECKOUTMODE == 'TEST'){

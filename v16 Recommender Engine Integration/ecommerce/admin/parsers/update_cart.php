@@ -8,11 +8,11 @@ if($_POST['mode']){
   $available = sanitize($_POST['edit_available']);
   $item_found = 0;
   if($mode == 'wish' || $mode == 'wishdelete'){
-    $cartQ = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
+    $cartQ = $db->query("SELECT * FROM wishlist WHERE userID = '{$user_id}'");
   }else if($mode == 'wishdelete'){
-    $cartQ = $db->query("SELECT * FROM wishlist WHERE username = '{$user_name}'");
+    $cartQ = $db->query("SELECT * FROM wishlist WHERE userID = '{$user_id}'");
   }else{
-    $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+    $cartQ = $db->query("SELECT * FROM cart WHERE userID = '{$user_id}'");
   }
   $return = mysqli_num_rows($cartQ);
     if($return > 0){
@@ -97,15 +97,15 @@ if($_POST['mode']){
       if(!empty($updated_items)){
         $newUpItem = json_encode($updated_items);
         if($mode == 'wish' || $mode == 'wishdelete'){
-         $db->query("UPDATE wishlist SET items = '{$newUpItem}' WHERE username = '{$user_name}'");
+         $db->query("UPDATE wishlist SET items = '{$newUpItem}' WHERE userID = '{$user_id}'");
          $_SESSION['success_flash'] = 'Your wish list has been updated';
        }else{
          $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
          $exp_time = time();
         // $db->query("UPDATE cart SET items = '{$newUpItem}', expire_date = '{$cart_expire}', exp_time = '{$exp_time}'
-                    // WHERE username = '{$user_name}'");
+                    // WHERE userID = '{$user_id}'");
           $repoObject = new CartRepoController();
-          $repoObject->updateCart($newUpItem,$cart_expire,$exp_time,$user_name);
+          $repoObject->updateCart($newUpItem,$cart_expire,$exp_time,$user_id);
          $_SESSION['success_flash'] = 'Your shopping cart has been updated';
        }
       }
@@ -114,9 +114,9 @@ if($_POST['mode']){
       //You may choose to keep it to know what user are pairing or selecting.
       if(empty($updated_items)){
         if($mode == 'wish' || $mode == 'wishdelete'){
-         $db->query("DELETE FROM wishlist WHERE username = '{$user_name}'");
+         $db->query("DELETE FROM wishlist WHERE userID = '{$user_id}'");
         }else{
-         $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+         $db->query("DELETE FROM cart WHERE userID = '{$user_id}'");
          $_SESSION['total_item_ordered'] = 0;
       //setcookie(CART_COOKIE,'',1,"/",$domain,false);
        }

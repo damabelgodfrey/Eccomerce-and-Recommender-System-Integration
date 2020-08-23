@@ -23,9 +23,9 @@
 <?php
 $paid = 0;
 $return = 0;
-if(isset($user_name)){
+if(isset($user_id)){
 $cartRepObj = new CartRepoController();
-$cartQ = $cartRepObj->selectCart($user_name);
+$cartQ = $cartRepObj->selectCart($user_id);
 $return = count($cartQ);
 }
   if($return != 1){ ?>

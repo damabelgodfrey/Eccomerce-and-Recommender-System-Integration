@@ -295,8 +295,8 @@ $paid =0;
 $unique_item_count =0;
 $total_item_count =0;
 $cart_exist = 0;
-if(isset($user_name)){
-$cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+if(isset($user_id)){
+$cartQ = $db->query("SELECT * FROM cart WHERE userID = '{$user_id}'");
 $return = mysqli_num_rows($cartQ);
 if($return == 1){
 $CartResult = mysqli_fetch_assoc($cartQ);

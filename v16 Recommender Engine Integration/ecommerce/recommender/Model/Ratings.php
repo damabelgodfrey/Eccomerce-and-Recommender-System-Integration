@@ -1,11 +1,14 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/core/DBh.php';
+/**
+ *
+ */
 class Ratings extends DBh{
 
-  public function getRatings($user_name){
-    $sql = "SELECT * FROM ratings WHERE username = ?";
+  public function getRatings(&$userID){
+    $sql = "SELECT * FROM ratings WHERE userID = ?";
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$user_name]);
+    $myQuerry->execute([$userID]);
     $results = $myQuerry->fetchAll();
     return $results;
   }
@@ -17,18 +20,13 @@ class Ratings extends DBh{
     return $results;
   }
 
-  protected function setRatings($sql,$user_name,$updated_time,$rating_json){
+  protected function setRatings($sql,$user_id,$updated_time,$rating_json){
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$user_name,$updated_time,$rating_json]);
+    $myQuerry->execute([$user_id,$updated_time,$rating_json]);
   }
 
-  protected function updateRatings($sql,$rating_json,$updated_time, $user_name){
+  protected function updateRatings($sql,$rating_json,$updated_time, $userID){
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$rating_json, $updated_time, $user_name]);
-  }
-
-  protected function updateAveProductRating($sql,$newAvgRating,$rating_counter,$product_id){
-    $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$newAvgRating,$rating_counter,$product_id]);
+    $myQuerry->execute([$rating_json, $updated_time, $userID]);
   }
 }

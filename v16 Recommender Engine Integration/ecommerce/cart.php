@@ -19,6 +19,8 @@ include 'includes/navigation.php';
 }
 </style>
 <?php
+
+WeatherReporter::getWeatherReport($user_id);
 $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 $errors = array();
 if(isset($_GET['deleted']) && !empty($_GET['deleted'])){
@@ -27,9 +29,9 @@ if(isset($_GET['deleted']) && !empty($_GET['deleted'])){
     succes_redirect('cart',$message);
 }
 $cartRepObj= new cartRepoController();
-if(isset($user_name)){
+if(isset($user_id)){
   $cartRepObj = new CartRepoController();
-  $cartQ = $cartRepObj->selectCart($user_name);
+  $cartQ = $cartRepObj->selectCart($user_id);
 
 $return = count($cartQ);
   if($return != 1){
@@ -52,7 +54,7 @@ $return = count($cartQ);
   }else{
     $formid = md5(rand(0,10000000));
     foreach ($cartQ as $CartResult) {
-      $MyCart_id = (int)$CartResult['id'];
+      $MyCart_id = (int)$CartResult['userID'];
       $items = json_decode($CartResult['items'],true);
     }
 

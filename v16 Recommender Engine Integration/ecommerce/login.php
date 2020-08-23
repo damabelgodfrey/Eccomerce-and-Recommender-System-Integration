@@ -34,7 +34,7 @@ if($_POST){
 
     //$query = $db->query("SELECT * FROM customer_user WHERE email = '$email'");
     $repoObject = new UserController();
-    $query =$repoObject->selectUser("customer",$email);
+    $query =$repoObject->selectUserByEmail("customer",$email);
     $userCount = count($query);
     if($userCount == 0){
       $errors[] = 'The email provided does not exist on the system.';

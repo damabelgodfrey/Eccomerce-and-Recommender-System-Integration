@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2020 at 01:52 AM
+-- Generation Time: Aug 23, 2020 at 01:55 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -109,7 +109,7 @@ INSERT INTO `brand` (`id`, `brand`) VALUES
 
 CREATE TABLE `cart` (
   `id` int(11) NOT NULL,
-  `username` text COLLATE utf8_unicode_ci NOT NULL,
+  `userID` int(11) NOT NULL,
   `items` text COLLATE utf8_unicode_ci NOT NULL,
   `expire_date` datetime NOT NULL,
   `exp_time` int(11) NOT NULL
@@ -119,12 +119,12 @@ CREATE TABLE `cart` (
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`id`, `username`, `items`, `expire_date`, `exp_time`) VALUES
-(435, 'godfrey', '[{\"id\":\"27\",\"price\":\"3200\",\"size\":\"Family\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:44:29', 1595447069),
-(436, 'Giudy', '[{\"id\":\"31\",\"price\":\"10\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"28\",\"price\":\"4500\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:48:41', 1595447321),
-(437, 'peter', '[{\"id\":\"25\",\"price\":\"2500\",\"size\":\"medium\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"31\",\"price\":\"10\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"28\",\"price\":\"4500\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:54:56', 1595447696),
-(443, 'damabel', '[{\"id\":\"81\",\"price\":\"24\",\"size\":\"5\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"18\",\"price\":\"1900\",\"size\":\"Family\",\"quantity\":1,\"request\":\"\",\"discount\":\"0\"}]', '2020-09-13 02:38:35', 1597369115),
-(447, 'ledi', '[{\"id\":\"28\",\"price\":\"3900\",\"size\":\"Baby\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"\"},{\"id\":\"18\",\"price\":\"1900\",\"size\":\"Family\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-09-14 21:16:07', 1597522567);
+INSERT INTO `cart` (`id`, `userID`, `items`, `expire_date`, `exp_time`) VALUES
+(435, 10, '[{\"id\":\"27\",\"price\":\"3200\",\"size\":\"Family\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:44:29', 1595447069),
+(436, 12, '[{\"id\":\"31\",\"price\":\"10\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"28\",\"price\":\"4500\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:48:41', 1595447321),
+(437, 5, '[{\"id\":\"25\",\"price\":\"2500\",\"size\":\"medium\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"31\",\"price\":\"10\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"28\",\"price\":\"4500\",\"size\":\"Adult\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-08-21 20:54:56', 1595447696),
+(443, 11, '[{\"id\":\"81\",\"price\":\"24\",\"size\":\"5\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"},{\"id\":\"18\",\"price\":\"1900\",\"size\":\"Family\",\"quantity\":1,\"request\":\"\",\"discount\":\"0\"}]', '2020-09-13 02:38:35', 1597369115),
+(447, 6, '[{\"id\":\"28\",\"price\":\"3900\",\"size\":\"Baby\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"\"},{\"id\":\"18\",\"price\":\"1900\",\"size\":\"Family\",\"quantity\":\"1\",\"request\":\"\",\"discount\":\"0\"}]', '2020-09-14 21:16:07', 1597522567);
 
 -- --------------------------------------------------------
 
@@ -267,10 +267,11 @@ CREATE TABLE `customer_user` (
 
 INSERT INTO `customer_user` (`id`, `username`, `full_name`, `email`, `password`, `phone`, `street`, `street2`, `city`, `state`, `zip_code`, `country`, `join_date`, `last_login`, `permissions`) VALUES
 (5, 'peter', 'Peter customer', 'peter@mail.com', '$2y$10$jPS1FcbjseZFxBacy2MsX.PW6C5DOOVliYtk0qm9nzyBvuVlXDrhC', '08030342222', 'AIT Road', 'Chioba', 'Port Harcourt', 'Rivers State', '1111', 'Nigeria', '2018-11-02 10:32:32', '2020-07-22 20:53:23', 'customer'),
-(6, 'ledi', 'Ledi Damabel', 'ledi@mail.com', '$2y$10$jPS1FcbjseZFxBacy2MsX.PW6C5DOOVliYtk0qm9nzyBvuVlXDrhC', '08030342222', 'Ameritinz Store 1', 'Rumuola', 'Port Harcourt', 'Rivers State', '1111', 'Nigeria', '2018-11-02 10:41:49', '2020-08-15 20:14:05', 'admin,editor,staff'),
+(6, 'ledi', 'Ledi Damabel', 'ledi@mail.com', '$2y$10$jPS1FcbjseZFxBacy2MsX.PW6C5DOOVliYtk0qm9nzyBvuVlXDrhC', '08030342222', 'Ameritinz Store 1', 'Rumuola', 'Port Harcourt', 'Rivers State', '1111', 'Nigeria', '2018-11-02 10:41:49', '2020-08-21 15:45:39', 'admin,editor,staff'),
 (10, 'godfrey', 'godfrey, Gret', 'godfrey@mail.com', '$2y$10$ljIC7/KfVgteMJ7S5kwnV.mQq457S9B.y1T0ZIP4LKacpdqGN8nPK', '08030342243', 'GRA', 'Estate', 'Port Harcourt', 'Rivers State', '1111', 'Nigeria', '2018-11-04 14:03:49', '2020-07-25 19:38:39', 'admin,editor,staff'),
-(11, 'damabel', 'Damabel James', 'damabel@mail.com', '$2y$10$8Opb7nj4hUMYtIfG8Oza1OpeQn.63Ssm.EF1IihsNe04L9D2mVQZ.', '08030932109', '', '', '', '', '', '', '2018-11-18 21:07:43', '2020-08-16 10:14:00', 'admin,editor,staff'),
-(12, 'Giudy', 'Giudy Taiwah', 'giudy@mail.com', '$2y$10$1dz6OfaYCHRMh.3NGUL0F.wdXZ7/c2p/wu6lYEsWsGuf5jZbENbju', '080648756211', '', '', '', '', '', '', '2018-12-10 22:26:04', '2020-07-22 20:47:57', 'editor,staff');
+(11, 'damabel', 'Damabel James', 'damabel@mail.com', '$2y$10$8Opb7nj4hUMYtIfG8Oza1OpeQn.63Ssm.EF1IihsNe04L9D2mVQZ.', '08030932109', '', '', '', '', '', '', '2018-11-18 21:07:43', '2020-08-20 00:27:28', 'admin,editor,staff'),
+(12, 'Giudy', 'Giudy Taiwah', 'giudy@mail.com', '$2y$10$1dz6OfaYCHRMh.3NGUL0F.wdXZ7/c2p/wu6lYEsWsGuf5jZbENbju', '080648756211', '', '', '', '', '', '', '2018-12-10 22:26:04', '2020-08-21 13:32:34', 'editor,staff'),
+(13, 'Antonia', 'Peter customer', 'antonia@mail.com', '$2y$10$jPS1FcbjseZFxBacy2MsX.PW6C5DOOVliYtk0qm9nzyBvuVlXDrhC', '08030342222', 'AIT Road', 'Chioba', 'Port Harcourt', 'Rivers State', '1111', 'Nigeria', '2018-11-02 10:32:32', '2020-07-22 20:53:23', 'customer');
 
 -- --------------------------------------------------------
 
@@ -326,6 +327,31 @@ INSERT INTO `permissions` (`id`, `permission`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `predictions`
+--
+
+CREATE TABLE `predictions` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `neigbourhood_ranking` text NOT NULL,
+  `user_based_prediction` text NOT NULL,
+  `user_based_last_updated` date NOT NULL,
+  `item_based_prediction` text NOT NULL,
+  `item_based_last_updated` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `predictions`
+--
+
+INSERT INTO `predictions` (`id`, `userID`, `neigbourhood_ranking`, `user_based_prediction`, `user_based_last_updated`, `item_based_prediction`, `item_based_last_updated`) VALUES
+(1, 6, '[{\"user_id\":10,\"sim_score\":0.9878048780487805},{\"user_id\":12,\"sim_score\":0.9621069158436208},{\"user_id\":5,\"sim_score\":0.9804686029234599},{\"user_id\":11,\"sim_score\":0.9826029297007869},{\"user_id\":13,\"sim_score\":0.9823974175160344}]', '[{\"product_id\":37,\"predicted_rating\":\"4.86\"},{\"product_id\":81,\"predicted_rating\":\"3.91\"},{\"product_id\":78,\"predicted_rating\":\"3.86\"},{\"product_id\":61,\"predicted_rating\":\"3.86\"},{\"product_id\":86,\"predicted_rating\":\"3.86\"},{\"product_id\":31,\"predicted_rating\":\"3.66\"}]', '2020-08-23', '[{\"product_id\":82,\"predicted_rating\":\"4.77\"},{\"product_id\":78,\"predicted_rating\":\"4.77\"},{\"product_id\":81,\"predicted_rating\":\"4.77\"},{\"product_id\":79,\"predicted_rating\":\"4.77\"},{\"product_id\":84,\"predicted_rating\":\"4.77\"},{\"product_id\":37,\"predicted_rating\":\"4.09\"},{\"product_id\":20,\"predicted_rating\":\"4.09\"},{\"product_id\":27,\"predicted_rating\":\"4.09\"},{\"product_id\":40,\"predicted_rating\":\"4.09\"},{\"product_id\":23,\"predicted_rating\":\"4.09\"}]', '2020-08-23'),
+(8, 11, '[{\"user_id\":10,\"sim_score\":0.9847319278346618},{\"user_id\":12,\"sim_score\":0.9484168381883898},{\"user_id\":5,\"sim_score\":0.9796603133726217},{\"user_id\":6,\"sim_score\":0.9770084209183943},{\"user_id\":13,\"sim_score\":0.9595470773272701}]', '[{\"product_id\":16,\"predicted_rating\":\"4.58\"},{\"product_id\":59,\"predicted_rating\":\"4.21\"},{\"product_id\":31,\"predicted_rating\":\"3.80\"}]', '2020-08-20', '[{\"product_id\":13,\"predicted_rating\":\"4.85\"},{\"product_id\":80,\"predicted_rating\":\"4.85\"},{\"product_id\":63,\"predicted_rating\":\"4.85\"},{\"product_id\":65,\"predicted_rating\":\"4.85\"},{\"product_id\":67,\"predicted_rating\":\"4.85\"},{\"product_id\":61,\"predicted_rating\":\"4.08\"},{\"product_id\":79,\"predicted_rating\":\"4.03\"}]', '2020-08-20'),
+(9, 12, '[{\"user_id\":10,\"sim_score\":0.92},{\"user_id\":5,\"sim_score\":0.9809284390447272},{\"user_id\":11,\"sim_score\":0.9484168381883898},{\"user_id\":6,\"sim_score\":0.9574271077563381},{\"user_id\":13,\"sim_score\":1}]', '[{\"product_id\":37,\"predicted_rating\":\"4.92\"},{\"product_id\":21,\"predicted_rating\":\"4.25\"},{\"product_id\":81,\"predicted_rating\":\"3.96\"},{\"product_id\":18,\"predicted_rating\":\"4.02\"},{\"product_id\":78,\"predicted_rating\":\"3.92\"},{\"product_id\":61,\"predicted_rating\":\"3.92\"},{\"product_id\":86,\"predicted_rating\":\"3.92\"},{\"product_id\":59,\"predicted_rating\":\"4.12\"},{\"product_id\":25,\"predicted_rating\":\"3.95\"},{\"product_id\":32,\"predicted_rating\":\"3.31\"}]', '2020-08-21', '[{\"product_id\":63,\"predicted_rating\":\"4.71\"},{\"product_id\":20,\"predicted_rating\":\"4.71\"},{\"product_id\":25,\"predicted_rating\":\"4.71\"},{\"product_id\":40,\"predicted_rating\":\"4.68\"},{\"product_id\":32,\"predicted_rating\":\"4.68\"},{\"product_id\":24,\"predicted_rating\":\"4.68\"},{\"product_id\":80,\"predicted_rating\":\"4.11\"},{\"product_id\":78,\"predicted_rating\":\"4.11\"}]', '2020-08-21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -365,7 +391,7 @@ INSERT INTO `products` (`id`, `title`, `price`, `list_price`, `brand`, `categori
 (19, 'Olay Special', '4900.00', '5000.00', 44, '82', '/ecommerce/images/products/Olay Special987c8.jpg,/ecommerce/images/products/Olay Special9da24.jpg', 'Olay original with extra-ordinary sheer butter. Brighter and healthy skin for everyday glow', 'Olay Healthy Skin', 0, 'Adult:4900:3:20', '0:0', 0, 0, 0, 1, 0, 3.7, 0),
 (20, 'ST Ives', '3900.00', '4000.00', 44, '82', '/ecommerce/images/products/ST Ives1.jpg', 'St Ives original lotion for clear skin and remove blemish replacing with radiant skin..', 'st ive Lotion smooth', 0, 'small:2000:5:10,medium:2000:14:10', '5:11900', 0, 0, 0, 1, 0, 3.6, 0),
 (21, 'Tresemme', '3900.00', '4000.00', 46, '87', '/ecommerce/images/products/Tresemme0.jpg,/ecommerce/images/products/Tresemme1.jpg', 'TRESemme Cleanse & Replenish Deep Cleansing Shampoo is the answer for hair that need refreshing.', 'Shampoo Replenish', 0, 'Adult:3900:38:10', '1:3900', 0, 0, 0, 1, 0, 4.7, 0),
-(22, 'ST Ives Hyd..', '3900.00', '4000.00', 46, '82', '/ecommerce/images/products/ST Ives Hyd..0.jpg', 'ST Ives hydrating product for better result on skin.', 'hydrated Replenish Skin', 1, 'Adult:3900:18:20', '7:27300', 0, 1, 0, 1, 0, 3.8, 4),
+(22, 'ST Ives Hyd..', '3900.00', '4000.00', 46, '82', '/ecommerce/images/products/ST Ives Hyd..0.jpg', 'ST Ives hydrating product for better result on skin.', 'hydrated Replenish Skin', 1, 'Adult:3900:18:20', '7:27300', 0, 1, 0, 1, 0, 3.6, 5),
 (23, 'Huggies Pampers', '2900.00', '3000.00', 49, '101', '/ecommerce/images/products/Huggies Pampers0.jpg', 'Original US brand pampers by Huggies..Comfort guarantee for your baby.', 'pampers Babies Toileteries', 1, 'Saver:2900:10:10,Family:4000:12:10', '2:5800', 0, 0, 0, 1, 0, 4, 1),
 (24, 'Huggies Snugglers', '4900.00', '5000.00', 46, '101', '/ecommerce/images/products/Huggies Snugglers0.jpg', 'Huggies original Snugglers for your baby.', 'Huggies', 0, 'Baby:4900:12:20', '1:4900', 0, 0, 0, 1, 0, 3.8, 0),
 (25, 'Garnier blend', '2900.00', '3000.00', 46, '87', '/ecommerce/images/products/Garnier blend0.jpg', 'original US Garnier whole blend..', 'blend', 0, 'small:2000:14:10,medium:2500:11:10', '6:13000', 0, 1, 0, 1, 0, 4, 4),
@@ -374,7 +400,7 @@ INSERT INTO `products` (`id`, `title`, `price`, `list_price`, `brand`, `categori
 (28, 'Dove Lotion', '3900.00', '4000.00', 51, '87', '/ecommerce/images/products/Dove Lotion0.jpg,/ecommerce/images/products/Dove Lotion1.jpg,/ecommerce/images/products/Dove Lotion2.jpg', 'Original dove cream for clear and radiant skin..Original dove cream for clear and radiant skin..\r\nOriginal dove cream for clear and radiant skin..\r\nOriginal dove cream for clear and radiant skin..', 'dove lotion ', 0, 'Baby:3900:3:10,Adult:4500:2:10', '5:20100', 0, 1, 0, 1, 0, 4, 6),
 (29, 'Oxi Detergent', '4500.00', '5000.00', 46, '86', '/ecommerce/images/products/Oxi Detergent0.jpg', 'Oxi clean laundry detergent for fast and safe wash.', 'laundry detergent', 1, 'Adults:4500:0:10,Family:5000:0:10', '5:23000', 0, 0, 0, 1, 0, 4.5, 0),
 (31, 'Skot Roll', '2990.00', '3100.00', 46, '86', '/ecommerce/images/products/Skot Roll0.jpg', 'Skot Toilet original roll..', 'Deep Clean ', 1, 'Adult:10:4:10', '0:0', 0, 0, 0, 1, 0, 3.5, 2),
-(32, 'Nivea Lotion', '3990.00', '4000.00', 44, '87', '/ecommerce/images/products/Nivia Lotion0.jpg', 'Nivea original Body Lotion', 'Nivea Lotion Moisturizing', 1, 'Adult:20:48:12', '3:60', 0, 0, 0, 1, 0, 3.3, 3),
+(32, 'Nivea Lotion', '3990.00', '4000.00', 44, '87', '/ecommerce/images/products/Nivia Lotion0.jpg', 'Nivea original Body Lotion', 'Nivea Lotion Moisturizing', 1, 'Adult:20:48:12', '3:60', 0, 0, 0, 1, 0, 4, 3),
 (37, 'Aveeno', '1000.00', '2000.00', 46, '87', '/ecommerce/images/products/Aveenoce272.png', 'Aveeno Daily Moisturizing Body Lotion with Soothing Oat and Rich Emollients to Nourish Dry Skin, Gentle &amp; Fragrance-Free Lotion is Non-Greasy &amp; Non-Comedogenic, 18 fl. oz', 'Moisturizing Lotion Dry  skin', 0, 'medium:1000:16:4', '3:3000', 0, 1, 0, 1, 0, 5, 1),
 (38, 'baby T', '3900.00', '4000.00', 46, '101', '/ecommerce/images/products/baby T0.jpg', 'Baby cover dool', 'Baby cover', 0, 'medium:3900:15:10', '0:0', 0, 0, 0, 1, 0, 5, 0),
 (40, 'Joy cream', '121.00', '144.00', 49, '120', '/ecommerce/images/products/Joy cream26d8e.jpg,/ecommerce/images/products/Joy cream5ddf2.jpg', 'better lotion and better skin', 'joy cream', 0, 'small:144:12:10', '0:0', 0, 0, 0, 1, 0, 4, 0),
@@ -432,25 +458,22 @@ INSERT INTO `ranks` (`id`, `rank`) VALUES
 
 CREATE TABLE `ratings` (
   `id` int(11) NOT NULL,
-  `username` text COLLATE utf8_unicode_ci NOT NULL,
-  `last_updated` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `product_rating` text COLLATE utf8_unicode_ci NOT NULL,
-  `neigbourhood_ranking` text COLLATE utf8_unicode_ci NOT NULL,
-  `predicted_rating` text COLLATE utf8_unicode_ci NOT NULL,
-  `cf_last_updated` date DEFAULT NULL
+  `userID` int(11) NOT NULL,
+  `last_updated` datetime NOT NULL,
+  `product_rating` text COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `ratings`
 --
 
-INSERT INTO `ratings` (`id`, `username`, `last_updated`, `product_rating`, `neigbourhood_ranking`, `predicted_rating`, `cf_last_updated`) VALUES
-(22, 'godfrey', '2020-07-22 08:44:29', '[{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"16\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"32\",\"ratingType\":\"cart_wish\",\"rating\":4},\r\n{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":5},\r\n{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":3},\r\n{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":5}\r\n]', '', '', NULL),
-(23, 'Giudy', '2020-07-22 08:48:41', '[{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"16\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":5}]', '', '', NULL),
-(24, 'peter', '2020-07-22 08:54:56', '[{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"16\",\"ratingType\":\"explicit\",\"rating\":5},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":4}]', '', '', NULL),
-(25, 'damabel', '2020-08-14 02:38:35', '[{\"product_id\":\"81\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"18\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"78\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"61\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":86,\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"37\",\"ratingType\":\"cart_wish\",\"rating\":\"5\"},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":\"5\"},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"32\",\"ratingType\":\"cart_wish\",\"rating\":4}]', '[{\"user_id\":\"22\",\"sim_score\":0.9847319278346618},{\"user_id\":\"23\",\"sim_score\":0.9484168381883898},{\"user_id\":\"24\",\"sim_score\":0.9796603133726217},{\"user_id\":\"27\",\"sim_score\":0.9770084209183943},{\"user_id\":\"28\",\"sim_score\":0.9595470773272701}]', '[{\"product_id\":16,\"predict_rating\":\"4.58\"},{\"product_id\":59,\"predict_rating\":\"4.21\"},{\"product_id\":31,\"predict_rating\":\"3.80\"}]', '2020-08-17'),
-(27, 'ledi', '2020-08-15 09:16:07', '[{\"product_id\":\"18\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"59\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":28,\"ratingType\":\"explicit\",\"rating\":3},{\"product_id\":32,\"ratingType\":\"explicit\",\"rating\":2},{\"product_id\":16,\"ratingType\":\"explicit\",\"rating\":5},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":4}]', '', '', NULL),
-(28, 'Antonia', '2020-08-07 09:43:44', '[{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"81\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":5}]', '', '', '2020-08-16');
+INSERT INTO `ratings` (`id`, `userID`, `last_updated`, `product_rating`) VALUES
+(22, 10, '2020-07-22 08:44:29', '[{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"16\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"32\",\"ratingType\":\"cart_wish\",\"rating\":4},\r\n{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":5},\r\n{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":3},\r\n{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":5}\r\n]'),
+(23, 12, '2020-07-22 08:48:41', '[{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"16\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":5}]'),
+(24, 5, '2020-07-22 08:54:56', '[{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"16\",\"ratingType\":\"explicit\",\"rating\":5},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":4}]'),
+(25, 11, '2020-08-14 02:38:35', '[{\"product_id\":\"81\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"18\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"78\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"61\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":86,\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"37\",\"ratingType\":\"cart_wish\",\"rating\":\"5\"},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":\"5\"},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"32\",\"ratingType\":\"cart_wish\",\"rating\":4}]'),
+(27, 6, '2020-08-21 04:25:23', '[{\"product_id\":\"22\",\"ratingType\":\"explicit\",\"rating\":\"3\"},{\"product_id\":\"18\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"25\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"59\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":28,\"ratingType\":\"explicit\",\"rating\":3},{\"product_id\":32,\"ratingType\":\"explicit\",\"rating\":\"4\"},{\"product_id\":16,\"ratingType\":\"explicit\",\"rating\":5},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"26\",\"ratingType\":\"cart_wish\",\"rating\":4}]'),
+(28, 13, '2020-08-07 09:43:44', '[{\"product_id\":\"28\",\"ratingType\":\"cart_wish\",\"rating\":5},{\"product_id\":\"81\",\"ratingType\":\"cart_wish\",\"rating\":4},{\"product_id\":\"31\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"22\",\"ratingType\":\"cart_wish\",\"rating\":3},{\"product_id\":\"21\",\"ratingType\":\"cart_wish\",\"rating\":5}]');
 
 -- --------------------------------------------------------
 
@@ -697,7 +720,7 @@ INSERT INTO `transactions` (`id`, `charge_id`, `cart_id`, `full_name`, `email`, 
 
 CREATE TABLE `wishlist` (
   `id` int(11) NOT NULL,
-  `username` text COLLATE utf8_unicode_ci NOT NULL,
+  `userID` int(11) NOT NULL,
   `items` text COLLATE utf8_unicode_ci NOT NULL,
   `expire_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -728,7 +751,8 @@ ALTER TABLE `brand`
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `categories`
@@ -769,6 +793,13 @@ ALTER TABLE `permissions`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `predictions`
+--
+ALTER TABLE `predictions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -784,7 +815,8 @@ ALTER TABLE `ranks`
 -- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- Indexes for table `secure_customer`
@@ -826,7 +858,8 @@ ALTER TABLE `transactions`
 -- Indexes for table `wishlist`
 --
 ALTER TABLE `wishlist`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `userID` (`userID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -878,7 +911,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `customer_user`
 --
 ALTER TABLE `customer_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `discount`
@@ -891,6 +924,12 @@ ALTER TABLE `discount`
 --
 ALTER TABLE `permissions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `predictions`
+--
+ALTER TABLE `predictions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -945,6 +984,36 @@ ALTER TABLE `transactions`
 --
 ALTER TABLE `wishlist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`);
+
+--
+-- Constraints for table `predictions`
+--
+ALTER TABLE `predictions`
+  ADD CONSTRAINT `predictions_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`),
+  ADD CONSTRAINT `predictions_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`);
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`),
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`);
+
+--
+-- Constraints for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD CONSTRAINT `wishlist_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `customer_user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

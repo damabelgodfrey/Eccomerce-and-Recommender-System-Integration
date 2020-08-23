@@ -1,30 +1,26 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/core/DBh.php';
 class cartRepoController extends DBh{
-  public function insertCart($items_json, $user_name,$cart_expire,$exp_time){
-    $sql = "INSERT INTO cart (items,username,expire_date,exp_time) VALUES (?,?,?,?)";
+  public function insertCart($items_json, $user_id,$cart_expire,$exp_time){
+    $sql = "INSERT INTO cart (items,userID,expire_date,exp_time) VALUES (?,?,?,?)";
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$items_json, $user_name,$cart_expire,$exp_time]);
+    $myQuerry->execute([$items_json, $user_id,$cart_expire,$exp_time]);
     return $myQuerry->lastInsertId();
   }
 
-  public function updateCart($items_json,$cart_expire,$exp_time,$user_name){
-    $sql = "UPDATE cart SET items = ?, expire_date = ?, exp_time = ? WHERE username = ?";
+  public function updateCart($items_json,$cart_expire,$exp_time,$user_id){
+    $sql = "UPDATE cart SET items = ?, expire_date = ?, exp_time = ? WHERE userID = ?";
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$items_json,$cart_expire,$exp_time,$user_name]);
+    $myQuerry->execute([$items_json,$cart_expire,$exp_time,$user_id]);
   }
 
-  public function deleteCart($user_name){
-    $sql = "DELETE FROM cart WHERE username = ?";
+  public function deleteCart($user_id){
+    $sql = "DELETE FROM cart WHERE userID = ?";
     $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$user_name]);
+    $myQuerry->execute([$user_id]);
   }
   public function selectCart($input){
-    if(is_int($input)){
-      $sql = "SELECT * FROM cart WHERE id = ?";
-    }else{
-      $sql = "SELECT * FROM cart WHERE username = ?";
-    }
+    $sql = "SELECT * FROM cart WHERE userID = ?";
     $myQuerry = $this->getConnection()->prepare($sql);
     $myQuerry->execute([$input]);
     $results = $myQuerry->fetchAll();

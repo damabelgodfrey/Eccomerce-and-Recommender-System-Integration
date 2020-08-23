@@ -22,5 +22,9 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/Model/Products.ph
     return $this->getGroupProduct($ids);
     }
 
+    public function updateAveProductRating($newAvgRating,$rating_counter,$product_id){
+        $sql ="UPDATE products SET product_average_rating = ?, product_rating_counter = ? WHERE id = ?";
+        $this->setProductAveRating($sql,$newAvgRating,$rating_counter,$product_id);
 
+    }
 }

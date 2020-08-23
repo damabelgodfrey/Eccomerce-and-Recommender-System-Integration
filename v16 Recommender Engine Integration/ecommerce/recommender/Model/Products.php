@@ -38,8 +38,7 @@ class Products extends DBh{
     $myQuerry->execute([$rating_json, $updated_time, $user_name]);
   }
 
-  protected function updateAveProductRating($newAvgRating,$rating_counter,$product_id){
-      $sql ="UPDATE products SET product_average_rating = ?, product_rating_counter = ? WHERE id = ?";
+  protected function setProductAveRating($sql,$newAvgRating,$rating_counter,$product_id){
       $myQuerry = $this->getConnection()->prepare($sql);
       $myQuerry->execute([$newAvgRating,$rating_counter,$product_id]);
   }

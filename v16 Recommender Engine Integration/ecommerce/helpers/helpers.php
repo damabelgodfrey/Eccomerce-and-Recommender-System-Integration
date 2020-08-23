@@ -2,8 +2,9 @@
 //require_once '../core/init';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/includes/PorterStemmer.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/DictionaryLookUp.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA1.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeRatingPredictionA2.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/WeatherReporter.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserBasedCollaborativeFilteringA1.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserBasedCollaborativeFilteringA2.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RatingController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemBasedCollaborativeFiltering.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ProductController.php';
@@ -383,10 +384,10 @@ return;
 }
 
 /* this function returns product expired in cart to wishlist */
-function expireReturnProduct($cart_id,$user_name,$db){
+function expireReturnProduct($cart_id,$user_id,$db){
   $paid = 0;
   $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
-  $cartQ = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+  $cartQ = $db->query("SELECT * FROM cart WHERE userID = '{$user_id}'");
 //  $db->query("INSERT INTO wishlist(id,items,username,expire_date) VALUES ({$cart_id}','{$cartQ}','{$user_name}','{$cart_expire}')");
   $result = mysqli_fetch_assoc($cartQ);
   $cart_items = json_decode($result['items'],true);
@@ -404,7 +405,7 @@ function expireReturnProduct($cart_id,$user_name,$db){
     $json_update = json_encode($updated_items);
     //$db->query("UPDATE cart SET items = '{$json_update}' WHERE id = '{$cart_id}' AND paid = '{$paid}'");
     //$_SESSION['success_flash'] = 'Your shopping cart has been updated';
-    $cart_item = $db->query("SELECT * FROM cart WHERE username = '{$user_name}'");
+    $cart_item = $db->query("SELECT * FROM cart WHERE userID = '{$user_id}'");
     $cart = mysqli_fetch_assoc($cart_item);
     $items = json_decode($cart['items'],true); //makes it an associated array not an object
     foreach ($items as $w_item) {
@@ -423,25 +424,25 @@ function expireReturnProduct($cart_id,$user_name,$db){
       );
       $nill = 100; //not applicable for wishlist
       $available = $nill;
-     cart_wishlist_update('wishlist',$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available);
+     cart_wishlist_update('wishlist',$db,$item,$cart_id,$user_id,$json_update,$cart_expire,$available);
     }
-    $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+    $db->query("DELETE FROM cart WHERE userID = '{$user_id}'");
     $_SESSION['success_flash'] = $user_name. ' Your shopping cart has been updated';
   }
 
   if(empty($updated_items)){
-    $db->query("DELETE FROM cart WHERE username = '{$user_name}'");
+    $db->query("DELETE FROM cart WHERE userID = '{$user_id}'");
   }
 }
 
 //This function update wish list and cart.
-function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available){
+function cart_wishlist_update($mode,$db,$item,$cart_id,$user_id,$json_update,$cart_expire,$available){
   if($mode == 'wishlist'|| $mode == 'wish'){
     $wishlistRepObj = new WishlistRepoController();
-    $cartQ = $wishlistRepObj->selectWishlist($user_name);
+    $cartQ = $wishlistRepObj->selectWishlist($user_id);
   }else{
     $CartRepObj = new CartRepoController();
-    $cartQ = $CartRepObj->selectCart($user_name);
+    $cartQ = $CartRepObj->selectCart($user_id);
   }
   $return = count($cartQ);
   if($return != 1){
@@ -450,15 +451,15 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
       if($mode != 'wishlist'){
         $items_json = json_encode($item);
         if($mode == 'cart'){
-          $cart_id=  $CartRepObj->insertCart($items_json, $user_name, $cart_expire, $exp_time);
+          $cart_id=  $CartRepObj->insertCart($items_json, $user_id, $cart_expire, $exp_time);
           $_SESSION['success_flash'] = ' Item added to Cart successfully.';
           $_SESSION['cartid'] = $cart_id;
         }else{
-          $wishlistRepObj->insertWishlist($items_json,$user_name,$cart_expire);
+          $wishlistRepObj->insertWishlist($items_json,$user_id,$cart_expire);
           $_SESSION['success_flash'] = ' Item added to Wish List successfully.';
         }
       }else{
-       $wishlistRepObj->insertWishlist($items_json,$user_name,$cart_expire);
+       $wishlistRepObj->insertWishlist($items_json,$user_id,$cart_expire);
        $_SESSION['success_flash'] =  'wishlist update successful..';
       }
   }else{
@@ -489,14 +490,14 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_name,$json_update,$
     $exp_time = time();
 
       if($mode == 'cart'){
-          $CartRepObj->updateCart($items_json,$cart_expire,$exp_time,$user_name);
+          $CartRepObj->updateCart($items_json,$cart_expire,$exp_time,$user_id);
          $_SESSION['success_flash'] =  'cart update successful..';
       }else{
-        $wishlistRepObj->updateWishlist($items_json,$cart_expire,$user_name);
+        $wishlistRepObj->updateWishlist($items_json,$cart_expire,$user_id);
         $_SESSION['success_flash'] =  'wishlist update successful..';
       }
   }
 }
   $rating = new RatingController();
-  $rating->RateProduct($item[0]['id'],PURCHASE_RATING,$user_name,'cart_wish');
+  $rating->RateProduct($item[0]['id'],PURCHASE_RATING,$user_id,'cart_wish');
 }

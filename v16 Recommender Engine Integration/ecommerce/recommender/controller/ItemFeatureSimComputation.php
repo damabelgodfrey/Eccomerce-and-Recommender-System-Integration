@@ -6,10 +6,10 @@ class ItemFeatureSimComputation
 {
   //uses several algoriths to compute item similarity using specified features
   //Product title, product descripted and product tag
-  //rankes all items by similarity score against current item id.
-  public static function getFeatureSimCoefficient($simAlgorithm,$CFArray,$P_id,$rating=0){
+  //rankes all items by similarity score against current item id (p_id).
+  public static function getFeatureSimCoefficient($class, $simAlgorithm,$CFArray,$P_id,$rating=0){
     $product = new ProductController();
-  if(count($CFArray)!=0){
+  if(count($CFArray)!=0 && $class == "CollaborativeFilteringInit"){
       $OtherProductQuery = $product->requestGroupProduct($CFArray);
   }else{
     $OtherProductQuery = $product->getAllProducts();
@@ -35,8 +35,15 @@ class ItemFeatureSimComputation
          $otherProductID=  $otherProduct['id'];
          $condition = 0;
         if(is_logged_in()){
+          //  if($otherProductID != $P_id && !array_key_exists($otherProductID,$idArray)){
             if($otherProductID != $P_id && !array_key_exists($otherProductID,$idArray)){
-              $condition = 1;
+             if($class =="ItemBasedCollaborativeFiltering"){ // exclude item rated by user. Only find item similar to rated item
+               if(!array_key_exists($otherProductID,$CFArray)){
+                 $condition = 1;
+               }
+             }else{
+               $condition = 1;
+             }
             }
         }else{
           if($otherProductID != $P_id){
@@ -49,11 +56,9 @@ class ItemFeatureSimComputation
          $otherItemFeatures= processContent($stopWord, $otherProduct['title'].' '.$otherProduct['description']);
          $otherItemTags= processContent($stopWord, $otherProduct['p_keyword']);
          $p2_aveRating = (double)$otherProduct['product_average_rating'];
-
-
         switch ($simAlgorithm) {
           case 'LevenshteinDistance':
-            $result = LevenshteinDistance::getLevenshteinDistance($item1, $otherItemFeatures);
+            $result = LevenshteinDistance::getLevenshteinDistance($thisItemFeatures, $otherItemFeatures);
             //$result = levenshtein($item1, $item2);
             break;
           case 'JaccardSimilarityCoefficient':
@@ -73,16 +78,14 @@ class ItemFeatureSimComputation
             break;
          }
         if($result != 0){
-          $recommendedArray1[$otherProduct['id'].' '.$otherProduct['title']] = to2Decimal($result); //send to file
           $recommendedArray[$otherProduct['id']] = to2Decimal($result);
         }
         }
     }
-    if(isset($recommendedArray1)){
-      arsort($recommendedArray1);
-      debugfilewriter("\nContent Based Similarity\n");
-      debugfilewriter($recommendedArray1);
+    if(isset($recommendedArray)){
       arsort($recommendedArray);
+      debugfilewriter("\n$class.' => '.Content Based Similarity\n");
+      debugfilewriter($recommendedArray);
     }
     return $recommendedArray;
   }

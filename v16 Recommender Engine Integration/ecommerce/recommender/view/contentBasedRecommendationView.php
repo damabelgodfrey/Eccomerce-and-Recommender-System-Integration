@@ -1,10 +1,16 @@
 <?php
 $EmptyArray = array();
 $simAlgorithm ="CosineSimilarityRatingTagWeighted";
-$recommendedArray = ItemFeatureSimComputation::getFeatureSimCoefficient($simAlgorithm,$EmptyArray,$id);
+$return = 0;
+if(!is_logged_in()){
+$recommendedArray = ItemFeatureSimComputation::getFeatureSimCoefficient("contentBasedRecommendationView",$simAlgorithm,$EmptyArray,$id);
 $obj = new ProductController();
 $recommended = $obj->requestGroupProduct($recommendedArray); //fetch product recommended
+
+ $wObj = new WeatherReporterClass($user_id);
+ $wObj->getWeatherReport();
 $return = count($recommended);
+}
 if($return > 0){ ?>
         <div class="col-md-12">
         <div class="panel panel-default">
@@ -46,9 +52,4 @@ if($return > 0){ ?>
     </div>
   </div>
 <?php }else{ ?>
-  <div class="bg-info">
-    <p class="text-center text-info">
-      No recommendation made at this time!
-    </p>
-  </div>
 <?php } ?>

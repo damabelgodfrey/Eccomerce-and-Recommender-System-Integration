@@ -2,17 +2,22 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/core/DBh.php';
 class Users extends DBh{
   //update user last log in
-    public function setUserLogin($sql,$date,$user_username){
+    public function setUserLogin($sql,$date,$user_id){
      $myQuerry = $this->getConnection()->prepare($sql);
-     $myQuerry->execute([$date,$user_username]);
+     $myQuerry->execute([$date,$user_id]);
     }
     //select a system user
-  public function getUser($sql,$email){
+  public function getUser($sql,$user_id){
+    $myQuerry = $this->getConnection()->prepare($sql);
+    $myQuerry->execute([$user_id]);
+    $result = $myQuerry->fetchAll();
+    return $result;
+  }
+  public function getUserByEmail($sql,$email){
     $myQuerry = $this->getConnection()->prepare($sql);
     $myQuerry->execute([$email]);
     return $myQuerry;
   }
-
   public function getUserID($username,$sql){
     $myQuerry = $this->getConnection()->prepare($sql);
     $myQuerry->execute([$username]);
@@ -23,6 +28,7 @@ class Users extends DBh{
     }
     //return $id;
   }
+
   public function setUser($sql,$username,$name,$phone,$email,$hashed,$permissions){
     $myQuerry = $this->getConnection()->prepare($sql);
     $myQuerry->execute([$username,$name,$phone,$email,$hashed,$permissions]);

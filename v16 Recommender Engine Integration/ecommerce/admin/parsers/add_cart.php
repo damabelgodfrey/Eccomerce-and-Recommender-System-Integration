@@ -33,5 +33,5 @@ if ($dmode == 'cart') {
   alert("her");
 </script><?php
 $json_update = ''; //not applicable
-cart_wishlist_update($dmode,$db,$item,$cart_id,$user_name,$json_update,$cart_expire,$available);
+cart_wishlist_update($dmode,$db,$item,$cart_id,$user_id,$json_update,$cart_expire,$available);
  ?>

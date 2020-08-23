@@ -3,8 +3,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/Model/Ratings.php
 
 class RatingController extends Ratings{
   //This funcion rate a product
-  public function RateProduct($product_id, $rating,$user_name,$ratingType){
-      $ratingQ = $this->getRatings($user_name);
+  public function RateProduct($product_id, $rating,$user_id,$ratingType){
+      $ratingQ = $this->getRatings($user_id);
       $ratingExistCheck = count($ratingQ);
       $updated_time = date("Y-m-d h:i:s", time());
       $product_rating = array();
@@ -22,8 +22,8 @@ class RatingController extends Ratings{
         );
     if($ratingExistCheck != 1){ //insert user rating row to database if user have not rated any product previously
       $rating_json = json_encode($product_rating);
-        $sql = "INSERT INTO ratings (username,last_updated,product_rating) VALUES (?,?,?)";
-      $this->setRatings($sql,$user_name,$updated_time,$rating_json);
+        $sql = "INSERT INTO ratings (userID,last_updated,product_rating) VALUES (?,?,?)";
+      $this->setRatings($sql,$user_id,$updated_time,$rating_json);
     }else{//update existing product_rating json object
       $previosu_rating_match = 'false';
       $new_rating = array();
@@ -44,17 +44,17 @@ class RatingController extends Ratings{
         $new_rating = array_merge($product_rating,$previous_product_rating);
       }
         $rating_json = json_encode($new_rating);
-        $sql ="UPDATE ratings SET product_rating = ?, last_updated = ? WHERE username = ?";
-        $this->updateRatings($sql,$rating_json,$updated_time,$user_name);
+        $sql ="UPDATE ratings SET product_rating = ?, last_updated = ? WHERE userID = ?";
+        $this->updateRatings($sql,$rating_json,$updated_time,$user_id);
         $_SESSION['success_flash'] = 'rating update successful..';
       }
     }
         $this->computeProductAverageRating($product_id);
   }
 
-  public function getProductRatingForUser($product_id, $user){
+  public function getProductRatingForUser($product_id, $user_id){
     $returnRating = 0; //rating or zero no rating
-    $ratingQ = $this->getRatings($user);
+    $ratingQ = $this->getRatings($user_id);
     if(count($ratingQ) ==1){
       foreach ($ratingQ as $ratingtable) {
       $product_rating = json_decode($ratingtable['product_rating'],true); //makes it an associated array not an object
@@ -85,8 +85,8 @@ public  function computeProductAverageRating($product_id){
     }
     if($summation != 0){
       $newAvgRating = number_format(($summation/$rating_counter),1);
-      $sql ="UPDATE products SET product_average_rating = ?, product_rating_counter = ? WHERE id = ?";
-      $this->setProductRating($sql,$newAvgRating,$rating_counter,$product_id);
+      $pObj = new ProductController();
+      $pObj->updateAveProductRating($newAvgRating,$rating_counter,$product_id);
      }
     }
   }
