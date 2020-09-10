@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/EuclideanDistance.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_CosineSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/RatingBasedCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_AdjustedCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/PearsonCorrelation.php';
 /**
@@ -15,14 +15,15 @@ class UserBasedCollaborativeFilteringA2
   private static $userMeanRating;
 
   public static function getPredict($simAlgorithm,$allUserMatrix, $currentUser){
-    self:: $sim_Rating_product = array();
-    self::$simSummation =array();
-    $UserSimilarityArr = array();
+  self:: $sim_Rating_product = array();
+  self::$simSummation =array();
+  $UserSimilarityArr = array();
+  if(isset($allUserMatrix[$currentUser])){
     foreach($allUserMatrix as $otherUser =>$value){
       if($otherUser !=$currentUser){
         switch ($simAlgorithm) {
           case 'CosineSimilarity':
-            self::$similarity = CF_CosineSimilarity::computeF_CosineSimilarity($allUserMatrix,$currentUser,$otherUser);
+            self::$similarity = RatingBasedCosineSimilarity::computeF_CosineSimilarity($allUserMatrix,$currentUser,$otherUser);
             break;
 
           case 'EuclideanDistance':
@@ -45,8 +46,9 @@ class UserBasedCollaborativeFilteringA2
       $UserSimilarityArr[$otherUser]= self::$similarity;
       }
     }
-     $A2 =self::computeRatingPrediction();
-     return $A2;
+  }
+    $A2 =self::computeRatingPrediction();
+    return $A2;
   }
   public static function computeRatingPrediction(){
     $itemRatingPredictionArray = array();
@@ -72,27 +74,29 @@ class UserBasedCollaborativeFilteringA2
     $usertotalRating = 0;
     $userCounter = 0;
     $userTotalRating = 0;
-    foreach($ExistingMatrix[$otherUser] as $key=>$value){
-      $usertotalRating +=$value; //total of other user all ratings
-      $otherUserCounter++;
-     }
-    foreach($ExistingMatrix[$currentUser] as $key=>$value){
-      $userTotalRating +=$value;
-      $userCounter++;
-    }
-      $otherUserRatingMean = $usertotalRating/$otherUserCounter; // user mean rating
-      self::$userMeanRating = $userTotalRating/$userCounter;
-    foreach($ExistingMatrix[$otherUser] as $key=>$value){
-      if(!array_key_exists($key,$ExistingMatrix[$currentUser])){
-        if(!array_key_exists($key,self::$sim_Rating_product)){
-          self::$sim_Rating_product[$key] = 0;
+    if(isset($ExistingMatrix[$currentUser])){ //check if current user has a rating in user metrix
+      foreach($ExistingMatrix[$otherUser] as $key=>$value){
+        $usertotalRating +=$value; //total of other user all ratings
+        $otherUserCounter++;
+       }
+      foreach($ExistingMatrix[$currentUser] as $key=>$value){
+        $userTotalRating +=$value;
+        $userCounter++;
+      }
+        $otherUserRatingMean = $usertotalRating/$otherUserCounter; // user mean rating
+        self::$userMeanRating = $userTotalRating/$userCounter;
+      foreach($ExistingMatrix[$otherUser] as $key=>$value){
+        if(!array_key_exists($key,$ExistingMatrix[$currentUser])){
+          if(!array_key_exists($key,self::$sim_Rating_product)){
+            self::$sim_Rating_product[$key] = 0;
+          }
+          $x = ($ExistingMatrix[$otherUser][$key]-$otherUserRatingMean)*$sim;
+          self::$sim_Rating_product[$key]+=$x;
+          if(!array_key_exists($key,self::$simSummation)){
+            self::$simSummation[$key] = 0;
+          }
+          self::$simSummation[$key]+=$sim;
         }
-        $x = ($ExistingMatrix[$otherUser][$key]-$otherUserRatingMean)*$sim;
-        self::$sim_Rating_product[$key]+=$x;
-        if(!array_key_exists($key,self::$simSummation)){
-          self::$simSummation[$key] = 0;
-        }
-        self::$simSummation[$key]+=$sim;
       }
     }
   }

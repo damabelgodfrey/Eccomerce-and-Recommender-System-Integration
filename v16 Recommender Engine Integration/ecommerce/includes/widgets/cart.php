@@ -74,10 +74,9 @@ $return = count($cartQ);
             </tr>
             <?php
             $sub_total += ($item['quantity'] * (int)$item['price']);
-            ?>
-             <button  class="btn btn-block btn-default ">Sub Total <?=money($sub_total);?></button>
-             <?php
+
            }}?>
+            <button  class="btn btn-block btn-default ">Sub Total <?=money($sub_total);?></button>
              </tbody>
             </table>
 

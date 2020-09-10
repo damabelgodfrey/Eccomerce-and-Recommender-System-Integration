@@ -20,11 +20,15 @@ class WeatherReporter
     return $country;
    }
 
-  public static function getWeatherReport($user_id){
-    $location = self::getUserLocation($user_id);
-    self::$user_id = $user_id;
-     $url = self::$endPoint.'?q='.$location.'&APPID='.self::$APIKey;
-   //$url="http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=42e679a25c9b52325778910be51885e0";
+  public static function getWeatherReport($user_id=-1){
+    if($user_id == -1){
+      //get user location by gps or set default location
+     $url="http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=42e679a25c9b52325778910be51885e0";
+    }else{
+      $location = self::getUserLocation($user_id);
+      self::$user_id = $user_id;
+      $url = self::$endPoint.'?q='.$location.'&APPID='.self::$APIKey;
+    }
      $json=file_get_contents($url);
      $data=json_decode($json,true);
      foreach ($data as $key => $value) {

@@ -18,16 +18,16 @@ class Users extends DBh{
     $myQuerry->execute([$email]);
     return $myQuerry;
   }
-  public function getUserID($username,$sql){
-    $myQuerry = $this->getConnection()->prepare($sql);
-    $myQuerry->execute([$username]);
-    $results = $myQuerry->fetchAll();
-    foreach ($results as $key) {
-    $id =  $key['id'];
-    return $id;
-    }
-    //return $id;
-  }
+  // public function getUserID($username,$sql){
+  //   $myQuerry = $this->getConnection()->prepare($sql);
+  //   $myQuerry->execute([$username]);
+  //   $results = $myQuerry->fetchAll();
+  //   foreach ($results as $key) {
+  //   $id =  $key['id'];
+  //   return $id;
+  //   }
+  //   //return $id;
+  // }
 
   public function setUser($sql,$username,$name,$phone,$email,$hashed,$permissions){
     $myQuerry = $this->getConnection()->prepare($sql);

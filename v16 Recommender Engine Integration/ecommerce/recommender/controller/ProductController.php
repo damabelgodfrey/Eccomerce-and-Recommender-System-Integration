@@ -9,17 +9,20 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/Model/Products.ph
 
     }
 
-    // display recommended product on ecommerce
+    // fetch group products from product table
     public function requestGroupProduct($recommendedArray){
     $productIDs = array();
-     foreach($recommendedArray as $item =>$predictionValue){
-     if($predictionValue > 0.01 && (int)sanitize($_POST['id']) != $item){
-       $productIDs[] = $item;
-     }
-    }
-    $ids = implode(',',$productIDs);
-
-    return $this->getGroupProduct($ids);
+      if(isset($recommendedArray)){
+        foreach($recommendedArray as $item =>$predictionValue){
+        if($predictionValue > 0.01 && (int)sanitize($_POST['id']) != $item){
+          $productIDs[] = $item;
+        }
+       }
+       $ids = implode(',',$productIDs);
+       return $this->getGroupProduct($ids);
+      }else{
+        return $productIDs;
+      }
     }
 
     public function updateAveProductRating($newAvgRating,$rating_counter,$product_id){

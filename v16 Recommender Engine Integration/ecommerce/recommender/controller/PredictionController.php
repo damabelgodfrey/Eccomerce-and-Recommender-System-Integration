@@ -24,8 +24,11 @@ class PredictionController extends DBh{
     public function insertCFComputation($type, $userID, $CF){
       $predictionQ = $this->getPrediction($userID);
       $predictionExistCheck = count($predictionQ);
-        $y = array();
+      $y = array();
+      if(count($CF) != 0){
         foreach ($CF as $key => $value) {
+          $value = floatval($value);
+          $key = +$key;
           switch ($type) {
             case 'userBasedCF':
             $predicted_rating[] = array(
@@ -74,7 +77,8 @@ class PredictionController extends DBh{
         }else{
           $sql ="UPDATE predictions SET 	Item_based_prediction = ?, item_based_last_updated = ? WHERE userID = ?";
         }
-        $this->updatePrediction($sql,$CFC,$updated_time, $userID);
+      //  $this->updatePrediction($sql,$CFC,$updated_time, $userID);
         }
+      }
     }
 }

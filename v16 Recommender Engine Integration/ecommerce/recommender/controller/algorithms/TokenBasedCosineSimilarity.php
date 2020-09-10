@@ -1,10 +1,10 @@
 <?php
 
-class ContentBased_CosineSimilarity
+class TokenBasedCosineSimilarity
 {
     /**
-    * Key uptain from source
-    * @$apikey string
+    *
+    *
     */
     private static $item1Tokens = array();
     private static $item2Tokens = array();
@@ -14,7 +14,7 @@ class ContentBased_CosineSimilarity
     const TAG_WEIGHT = 0.75;
 
 
-    public static function tokenise($item1, $item2){
+    private static function tokenise($item1, $item2){
       $array = preg_split('/[^[:alnum:]]+/', strtolower($item1));
       foreach($array as $item)
         {
@@ -40,29 +40,29 @@ class ContentBased_CosineSimilarity
         $item2Product= array();
       	$xArray=array();
       	$yArray=array();
-      	$address=0;
+      	$key=0;
       	foreach ($uniqueMergedTokens as $token=>$val) {
           if(array_key_exists($token,$xToken)){
-          $xArray[$address]=  $val;
+          $xArray[$key]=  $val;
           }else{
-            $xArray[$address] = 0;
+            $xArray[$key] = 0;
           }
           if(array_key_exists($token,$yToken)){
-          $yArray[$address]=  $val;
+          $yArray[$key]=  $val;
           }else{
-            $yArray[$address] = 0;
+            $yArray[$key] = 0;
           }
-          $item1Product[] = pow($xArray[$address],2);
-          $item2Product[] = pow($yArray[$address],2);
-      		$address++;
+          $item1Product[] = pow($xArray[$key],2);
+          $item2Product[] = pow($yArray[$key],2);
+      		$key++;
       	}
       	$item1RootSumProduct=sqrt(array_sum($item1Product));
       	$item2RootSumProduct=sqrt(array_sum($item2Product));
-      	for($k=0;$k<$address;$k++){
+      	for($k=0;$k<$key;$k++){
       		$xArray[$k]/=$item1RootSumProduct;
       		$yArray[$k]/=$item2RootSumProduct;
-      		$a+=$xArray[$k]*$yArray[$k];
 
+          $a+=$xArray[$k]*$yArray[$k];
         	$b+=$xArray[$k]*$xArray[$k];
       		$c+=$yArray[$k]*$yArray[$k];
       	}

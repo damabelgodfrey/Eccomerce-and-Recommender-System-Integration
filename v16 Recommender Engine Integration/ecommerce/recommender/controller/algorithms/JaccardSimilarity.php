@@ -1,19 +1,35 @@
 <?php
 /**
- *
+ * Compute Jaccard Similarity coefficient for imputed product features
+ * @ return Similarity between two strings
  */
-
 class JaccardSimilarity{
-  public static function getJaccardSimilarityCoefficient($item1, $item2) {
-  //$prepareItem1 = array_map('trim', explode( $separator, strtolower($item1) ));
-  //$prepareItem2 = array_map('trim', explode( $separator, strtolower($item2) ));
-  $tokens1 = preg_split('/[\s,]+/', strtolower($item1));
-  $tokens2 = preg_split('/[\s,]+/', strtolower($item2));
-  $unique_item1_arr = array_unique($tokens1);
-	$unique_item2_arr = array_unique($tokens2);
-  $arr_intersection = array_intersect( $unique_item2_arr, $unique_item1_arr ); //intersection
-	$arr_union = array_unique(array_merge( $unique_item1_arr, $unique_item2_arr )); //union
-	$jaccard_sim_coefficient = count( $arr_intersection ) / count( $arr_union ); //
-	return $jaccard_sim_coefficient;
+  const TAGWEIGHT = 0.6;
+  const OTHERPROWEIGHT = 0.4;
+  // compute similarity with all property join
+  public static function getJaccardSimilarity($token1, $token1tag, $token2, $token2tag) : float{
+    $currentToken = $token1.''.$token1tag;
+    $otherToken = $token2.''.$token2tag;
+    $JC = self::computeJaccardSimilarity($currentToken, $otherToken);
+	  return $JC;
+ }
+  // compute similarity with weight
+  public static function getJaccardSimilarityWeight($token1, $token1tag, $token2, $token2tag) : float{
+    $p1 = self:: computeJaccardSimilarity($token1, $token2);
+    $p2 = self:: computeJaccardSimilarity($token1tag, $token2tag);
+    return ($p1 * self::OTHERPROWEIGHT) + ($p2 * self::TAGWEIGHT);
+  }
+
+ private static function computeJaccardSimilarity($token1, $token2) : float{
+  $currentToken = $token1;
+  $otherToken = $token2;
+  $currentTokensArr = preg_split('/[\s,]+/', $currentToken);
+  $otherTokensArr = preg_split('/[\s,]+/', $otherToken);
+  $intersection = array_intersect($otherTokensArr, $currentTokensArr ); //intersection
+  $union = array_unique(array_merge($currentTokensArr, $otherTokensArr )); //union
+  $noOfIntersection = count($intersection);
+  $noOfUnion = count($union);
+  $jaccard_sim_coefficient = $noOfIntersection / $noOfUnion; //
+  return $jaccard_sim_coefficient;
  }
 }

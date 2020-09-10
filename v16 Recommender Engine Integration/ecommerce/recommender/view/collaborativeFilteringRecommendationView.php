@@ -1,13 +1,21 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeFilteringInit.php';
-//require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemFeatureSimComputation.php';
-//user based
  $recommendedUserBasedCF = CollaborativeFilteringInit::userBasedCFinit($user_id);
  $recommendedItemBasedCF = CollaborativeFilteringInit::itemBasedCFinit($user_id);
+ $recommendedOnClickedItemBased = array();
+$return = 0;
+ if(isset($recommendedItemBasedCF) && $recommendedItemBasedCF != false){
+   $recommendedOnClickedItemBased = CollaborativeFilteringInit::Recommend($user_id,$recommendedItemBasedCF,$id);
+ }
 
- $recommendedOnClickedItemBased = CollaborativeFilteringInit::Recommend($user_id,$recommendedItemBasedCF,$id);
- //$recommendedOnClickedUserBased = CollaborativeFilteringInit::Recommend($user_name,$recommendedUserBasedCF,$id);
-
+//if recommender engine return false(i.e user has no existing rating) then recomend similar item to visitor view item.
+if($recommendedItemBasedCF == false && $recommendedUserBasedCF == false){
+  $obj = new ProductController();
+  $EmptyArray = array();
+  $simAlgorithm ="CosineSimilarityRatingTagWeighted";
+  $recommended= ItemFeatureSimComputation::getFeatureSimCoefficient("contentBasedRecommendationView",$simAlgorithm,$EmptyArray,$id);
+  $recommendedOnClickedItemBased = $obj->requestGroupProduct($recommended);
+}
 //$recommended = getRecommendedProduct($db,$recommendedArray);
 $return = count($recommendedOnClickedItemBased);
 if($return > 0){ ?>
@@ -59,9 +67,11 @@ if($return > 0){ ?>
 <?php } ?>
 <?php
 $obj = new ProductController();
-$recommendedUserBased = $obj->requestGroupProduct($recommendedUserBasedCF);
-//$recommended = getRecommendedProduct($db,$recommendedArray);
-$return = count($recommendedUserBased);
+$return = 0;
+if(isset($recommendedUserBasedCF) && $recommendedUserBasedCF != false){
+  $recommendedUserBased = $obj->requestGroupProduct($recommendedUserBasedCF);
+  $return = count($recommendedUserBased);
+}
 if($return > 0){ ?>
         <div class="col-md-12">
         <div class="panel panel-default">
@@ -112,8 +122,11 @@ if($return > 0){ ?>
 
 <?php
 $obj = new ProductController();
-$ItemCFRecommended = $obj->requestGroupProduct($recommendedItemBasedCF);
-$return = count($ItemCFRecommended);
+$return = 0;
+if(isset($recommendedItemBasedCF) && $recommendedItemBasedCF != false){
+  $ItemCFRecommended = $obj->requestGroupProduct($recommendedItemBasedCF);
+  $return = count($ItemCFRecommended);
+}
 if($return > 0){ ?>
         <div class="col-md-12">
         <div class="panel panel-default">

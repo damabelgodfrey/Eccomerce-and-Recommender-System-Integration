@@ -79,15 +79,13 @@ $return = mysqli_num_rows($itemQ);
 
     $itemsOrdered = $results['items'];
     $items = json_decode($results['items'],true);
-
+    $rating = new RatingController();
     foreach ($items as $item) {
       $newSizes = array();
       $qtyOrdered = array();
       $item_id = $item['id'];
-      //RateProduct($item_id, 5,$user_name,'purchase'); //rate all purchace product(s)
-      $rating = new RatingController();
-      $rating->RateProduct($item_id, 5,$user_id,'purchase');
-
+      //rate all purchace product(s)
+      $rating->RateProduct($item_id, PURCHASE_RATING,$user_id,'purchase');
       $productQ = $db->query("SELECT sizes,sold FROM products WHERE id='{$item_id}'");
       $product = mysqli_fetch_assoc($productQ);
       $sizes = sizesToArray($product['sizes']); //function in helper file
@@ -117,7 +115,7 @@ $return = mysqli_num_rows($itemQ);
       }
 
     //update cart
-    $db->query("DELETE cart WHERE userID = '{$user_id}'");
+    $db->query("DELETE FROM cart WHERE userID = '{$user_id}'");
     if(isset($_POST['instorePurchase'])){
       $db->query("INSERT INTO transactions
       (charge_id,cart_id,full_name,email,phone,street,street2,city,state,zip_code,country,items,sub_total,tax,discount,grand_total,description,txn_type,txn_date) VALUES

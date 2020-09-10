@@ -51,6 +51,14 @@ public function selectUserByEmail($userType,$email){
     $sql = "UPDATE staffs SET username =?, full_name =?, phone=?, email =?, photo =?, permissions = ?,last_login =? WHERE id=?";
     $this->setUpdatedStaff($sql,$username1,$name1,$phone1,$email1,$photopath,$permissions1,$rank,$last_login,$edit_id);
   }
+
+  public function updateUserAddress($street,$street2,$state,$city,$zip_code,$phone,$country,$user_email){
+    $sql = "UPDATE customer_user SET street =?, street2 =?, state = ?,city = ?, zip_code =?, phone=?, country = ?
+    WHERE email=?";
+    $myQuerry = $this->getConnection()->prepare($sql);
+    $myQuerry->execute([$street,$street2,$state,$city,$zip_code,$phone,$country,$user_email]);
+  }
+
   public function registerStaff($username,$name,$phone,$email,$hashed,$permissions,$ranks,$photopath){
     $sql ="INSERT INTO staffs (username,full_name,phone,email,password,permissions,rank,photo) values(?,?,?,?,?,?,?,?)";
     $this->setStaff($sql,$username,$name,$phone,$email,$hashed,$permissions,$ranks,$photopath);

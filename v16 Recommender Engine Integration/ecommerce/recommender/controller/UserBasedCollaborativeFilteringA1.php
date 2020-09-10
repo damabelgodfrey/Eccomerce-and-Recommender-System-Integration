@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/EuclideanDistance.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_CosineSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/RatingBasedCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/CF_AdjustedCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/PearsonCorrelation.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/PredictionController.php';
@@ -15,14 +15,15 @@ class UserBasedCollaborativeFilteringA1
   private static $simSummation = array();
   private static $userMeanRating;
   public static function getPredict($simAlgorithm,$allUserMatrix, $currentUser){
-    self:: $sim_Rating_product = array();
-    self::$simSummation =array();
-    $UserSiilarityArr = array();
+  self:: $sim_Rating_product = array();
+  self::$simSummation =array();
+  $userSimilarityArr = array();
+  if(isset($allUserMatrix[$currentUser])){
     foreach($allUserMatrix as $otherUser =>$value){
       if($otherUser !=$currentUser){
         switch ($simAlgorithm) {
           case 'CosineSimilarity':
-            self::$similarity = CF_CosineSimilarity::computeF_CosineSimilarity($allUserMatrix,$currentUser,$otherUser);
+            self::$similarity = RatingBasedCosineSimilarity::computeF_CosineSimilarity($allUserMatrix,$currentUser,$otherUser);
             break;
 
           case 'EuclideanDistance':
@@ -42,32 +43,38 @@ class UserBasedCollaborativeFilteringA1
         }
       self::prediction($allUserMatrix,$currentUser,$otherUser);
       debugfilewriter("\nUser Similarity Coefficient A1".' '.$otherUser.' '.self::$similarity);
-      $UserSiilarityArr[$otherUser] = self::$similarity;
+      if(self::$similarity != 0){ // store only similar user
+        $userSimilarityArr[$otherUser] = self::$similarity;
+       }
       }
     }
+  }
     $A1 = self::computeRatingPrediction();
     $SC = new PredictionController();
-    $SC->insertCFComputation("UserBasedNearestNeigbour", $currentUser, $UserSiilarityArr); //insert nearest neighbour to database
-  return $A1;
-   }
+    arsort($userSimilarityArr);
+    $SC->insertCFComputation("UserBasedNearestNeigbour", $currentUser, $userSimilarityArr); //insert nearest neighbour to database
+    return $A1;
+  }
    // compute the summation of the product of other user rating and similarity between this user and other user
    //compute the summaration of the similarity
    //Sim*RU1 and sum of simmilarity
   public static function prediction($ExistingMatrix,$currentUser,$otherUser){
   $sim = self::$similarity;
-  foreach($ExistingMatrix[$otherUser] as $key=>$value){
-    if(!array_key_exists($key,$ExistingMatrix[$currentUser])){
-      if(!array_key_exists($key,self::$sim_Rating_product)){
-        self::$sim_Rating_product[$key] = 0;
-      }
+  if(isset($ExistingMatrix[$currentUser])){
+    foreach($ExistingMatrix[$otherUser] as $key=>$value){
+      if(!array_key_exists($key,$ExistingMatrix[$currentUser])){
+        if(!array_key_exists($key,self::$sim_Rating_product)){
+          self::$sim_Rating_product[$key] = 0;
+        }
 
-      self::$sim_Rating_product[$key]+=$ExistingMatrix[$otherUser][$key]*$sim;
-      if(!array_key_exists($key,self::$simSummation)){
-        self::$simSummation[$key] = 0;
+        self::$sim_Rating_product[$key]+=$ExistingMatrix[$otherUser][$key]*$sim;
+        if(!array_key_exists($key,self::$simSummation)){
+          self::$simSummation[$key] = 0;
+        }
+        self::$simSummation[$key]+=$sim;
       }
-      self::$simSummation[$key]+=$sim;
     }
-  }
+   }
   }
 //compute summation of Sim*RU1/sum of simmilarity
   public static function computeRatingPrediction(){

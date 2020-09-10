@@ -14,12 +14,10 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/cartRe
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ParserFunctions.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/RootMeanSquareEstimation.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/ContentBased_CosineSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/TokenBasedCosineSimilarity.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/TokenBasedAdjCosineSimilarity.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/JaccardSimilarity.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/LevenshteinDistance.php';
-
-
-
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/D_LevenshteinDistance.php';
 
 // function to pass in an array of errors style in bootstrap for errors
 function display_errors($errors){
@@ -241,12 +239,14 @@ function check_permission($level){
   $Clearance_level = $level;
   $C_permission = explode(',',$Clearance_level);
   global $user_data;
-  $C_permissions = explode(',', $user_data['permissions']); //check user data permissions
+  if(isset($user_data)){
+      $C_permissions = explode(',', $user_data['permissions']); //check user data permissions
     if (count(array_intersect($C_permission, $C_permissions)) === 0) {
       return false;
     }else{
       return true;
     }
+  }
  }
 
 // format of date to be displayed
@@ -433,71 +433,4 @@ function expireReturnProduct($cart_id,$user_id,$db){
   if(empty($updated_items)){
     $db->query("DELETE FROM cart WHERE userID = '{$user_id}'");
   }
-}
-
-//This function update wish list and cart.
-function cart_wishlist_update($mode,$db,$item,$cart_id,$user_id,$json_update,$cart_expire,$available){
-  if($mode == 'wishlist'|| $mode == 'wish'){
-    $wishlistRepObj = new WishlistRepoController();
-    $cartQ = $wishlistRepObj->selectWishlist($user_id);
-  }else{
-    $CartRepObj = new CartRepoController();
-    $cartQ = $CartRepObj->selectCart($user_id);
-  }
-  $return = count($cartQ);
-  if($return != 1){
-    $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
-    $exp_time = time();
-      if($mode != 'wishlist'){
-        $items_json = json_encode($item);
-        if($mode == 'cart'){
-          $cart_id=  $CartRepObj->insertCart($items_json, $user_id, $cart_expire, $exp_time);
-          $_SESSION['success_flash'] = ' Item added to Cart successfully.';
-          $_SESSION['cartid'] = $cart_id;
-        }else{
-          $wishlistRepObj->insertWishlist($items_json,$user_id,$cart_expire);
-          $_SESSION['success_flash'] = ' Item added to Wish List successfully.';
-        }
-      }else{
-       $wishlistRepObj->insertWishlist($items_json,$user_id,$cart_expire);
-       $_SESSION['success_flash'] =  'wishlist update successful..';
-      }
-  }else{
-    foreach ($cartQ as $cart) {
-      $previous_items = json_decode($cart['items'],true); //makes it an associated array not an object
-      $item_match = 0;
-      $new_items = array();
-      foreach ($previous_items as $pitem){
-        if($item[0]['id'] == $pitem['id'] && $item[0]['size'] == $pitem['size']){
-          if($mode == 'cart'){
-              if($available == 0){
-              $pitem['quantity'] = $pitem['quantity']; // do not update quantity for same item
-            }else{
-              $pitem['quantity'] =$pitem['quantity'] + $item[0]['quantity'];
-            }
-          }else{
-            $pitem['quantity'] =$pitem['quantity'] + $item[0]['quantity'];
-          }
-         $item_match = 1;
-        }
-        $new_items[] = $pitem;
-       }
-    if($item_match != 1){
-      $new_items = array_merge($item,$previous_items);
-    }
-    $items_json = json_encode($new_items);
-    $cart_expire = date("Y-m-d H:i:s",strtotime("+30 days"));
-    $exp_time = time();
-
-      if($mode == 'cart'){
-          $CartRepObj->updateCart($items_json,$cart_expire,$exp_time,$user_id);
-         $_SESSION['success_flash'] =  'cart update successful..';
-      }else{
-        $wishlistRepObj->updateWishlist($items_json,$cart_expire,$user_id);
-        $_SESSION['success_flash'] =  'wishlist update successful..';
-      }
-  }
-}
-  $rating = new RatingController();
-  $rating->RateProduct($item[0]['id'],PURCHASE_RATING,$user_id,'cart_wish');
 }

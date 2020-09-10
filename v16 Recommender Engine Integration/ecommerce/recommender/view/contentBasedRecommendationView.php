@@ -1,13 +1,13 @@
 <?php
 $EmptyArray = array();
-$simAlgorithm ="CosineSimilarityRatingTagWeighted";
+$simAlgorithm ="LevenshteinDistance";
 $return = 0;
 if(!is_logged_in()){
 $recommendedArray = ItemFeatureSimComputation::getFeatureSimCoefficient("contentBasedRecommendationView",$simAlgorithm,$EmptyArray,$id);
 $obj = new ProductController();
 $recommended = $obj->requestGroupProduct($recommendedArray); //fetch product recommended
 
- $wObj = new WeatherReporterClass($user_id);
+ $wObj = new WeatherReporter();
  $wObj->getWeatherReport();
 $return = count($recommended);
 }

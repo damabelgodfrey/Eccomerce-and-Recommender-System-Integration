@@ -5,7 +5,7 @@ define('CART_COOKIE','SBhhfjjJSJjsjdjSD');
 define('CART_COOKIE_EXPIRE',time() + (86400 * 30));
 define('TAXRATE',0); //SALES TAX RATE 0.01 or -0.01 (+10% or -10%)
 
-define('CURRENCY', 'ngn'); //CURENCY
+define('CURRENCY', 'gbp'); //CURENCY
 define('CHECKOUTMODE', 'TEST'); // change TEST to LIVE when you are ready to go LIVE
 define('TIMEZONE','Africa/Lagos');
 define('CART_WISH_RATING',4);

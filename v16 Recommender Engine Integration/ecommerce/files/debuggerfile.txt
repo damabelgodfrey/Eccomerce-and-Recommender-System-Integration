@@ -1,0 +1,304 @@
+
+User Item Rating Matrix
+Array
+(
+    [11] => Array
+        (
+            [81] => 4
+            [18] => 4
+            [78] => 4
+            [61] => 4
+            [28] => 4
+            [86] => 4
+            [37] => 5
+            [22] => 5
+            [26] => 4
+            [21] => 4
+            [25] => 4
+            [32] => 4
+        )
+
+)
+
+User Item Rating Matrix
+Array
+(
+    [11] => Array
+        (
+            [81] => 4
+            [18] => 4
+            [78] => 4
+            [61] => 4
+            [28] => 4
+            [86] => 4
+            [37] => 5
+            [22] => 5
+            [26] => 4
+            [21] => 4
+            [25] => 4
+            [32] => 4
+        )
+
+)
+
+User Item Rating Matrix
+Array
+(
+    [godfrey] => Array
+        (
+            [Tresemme] => 4
+            [ladies Shoe] => 4
+            [Nivea Lotion] => 4
+            [Garnier blend] => 5
+            [Dove Lotion] => 3
+            [Skot Roll] => 5
+        )
+
+    [Giudy] => Array
+        (
+            [Dove Lotion] => 5
+            [ladies Shoe] => 4
+            [Skot Roll] => 3
+            [ST Ives Hyd..] => 3
+            [Paris Rose] => 5
+        )
+
+    [peter] => Array
+        (
+            [ST Ives Hyd..] => 4
+            [Paris Rose] => 5
+            [Skot Roll] => 4
+            [ladies Shoe] => 5
+            [Garnier blend] => 3
+            [Dove Lotion] => 4
+        )
+
+    [damabel] => Array
+        (
+            [ Platform Trainers] => 4
+            [Alway Maxi Pad1] => 4
+            [Pink Block Heels] => 4
+            [Nivea Indulgent Wash] => 4
+            [Dove Lotion] => 4
+            [Adidas black T-shirt] => 4
+            [Aveeno] => 5
+            [ST Ives Hyd..] => 5
+            [Paris Rose] => 4
+            [Tresemme] => 4
+            [Garnier blend] => 4
+            [Nivea Lotion] => 4
+        )
+
+    [Antonia] => Array
+        (
+            [Dove Lotion] => 5
+            [ Platform Trainers] => 4
+            [Skot Roll] => 3
+            [ST Ives Hyd..] => 3
+            [Tresemme] => 5
+        )
+
+    [ledi] => Array
+        (
+            [BLACK METALLIC CHUNK] => 3
+            [Alway Maxi Pad1] => 5
+            [Garnier blend] => 5
+            [Nivea Indulgent Wash] => 4
+            [Dove Lotion] => 5
+            [ST Ives Hyd..] => 3
+            [ladies Shoe] => 4
+            [Tresemme] => 4
+            [CHUNKY TRAINERS] => 4
+            [Nivea Lotion] => 5
+        )
+
+)
+
+User Item Rating Matrix
+Array
+(
+    [godfrey] => Array
+        (
+            [Tresemme] => 4
+            [ladies Shoe] => 4
+            [Nivea Lotion] => 4
+            [Garnier blend] => 5
+            [Dove Lotion] => 3
+            [Skot Roll] => 5
+        )
+
+    [Giudy] => Array
+        (
+            [Dove Lotion] => 5
+            [ladies Shoe] => 4
+            [Skot Roll] => 3
+            [ST Ives Hyd..] => 3
+            [Paris Rose] => 5
+        )
+
+    [peter] => Array
+        (
+            [ST Ives Hyd..] => 4
+            [Paris Rose] => 5
+            [Skot Roll] => 4
+            [ladies Shoe] => 5
+            [Garnier blend] => 3
+            [Dove Lotion] => 4
+        )
+
+    [damabel] => Array
+        (
+            [ Platform Trainers] => 4
+            [Alway Maxi Pad1] => 4
+            [Pink Block Heels] => 4
+            [Nivea Indulgent Wash] => 4
+            [Dove Lotion] => 4
+            [Adidas black T-shirt] => 4
+            [Aveeno] => 5
+            [ST Ives Hyd..] => 5
+            [Paris Rose] => 4
+            [Tresemme] => 4
+            [Garnier blend] => 4
+            [Nivea Lotion] => 4
+        )
+
+    [Antonia] => Array
+        (
+            [Dove Lotion] => 5
+            [ Platform Trainers] => 4
+            [Skot Roll] => 3
+            [ST Ives Hyd..] => 3
+            [Tresemme] => 5
+        )
+
+    [ledi] => Array
+        (
+            [BLACK METALLIC CHUNK] => 3
+            [Alway Maxi Pad1] => 5
+            [Garnier blend] => 5
+            [Nivea Indulgent Wash] => 4
+            [Dove Lotion] => 5
+            [ST Ives Hyd..] => 3
+            [ladies Shoe] => 4
+            [Tresemme] => 4
+            [CHUNKY TRAINERS] => 4
+            [Nivea Lotion] => 5
+        )
+
+)
+
+transformed
+Array
+(
+    [Tresemme] => Array
+        (
+            [godfrey] => 4
+            [damabel] => 4
+            [Antonia] => 5
+            [ledi] => 4
+        )
+
+    [ladies Shoe] => Array
+        (
+            [godfrey] => 4
+            [Giudy] => 4
+            [peter] => 5
+            [ledi] => 4
+        )
+
+    [Nivea Lotion] => Array
+        (
+            [godfrey] => 4
+            [damabel] => 4
+            [ledi] => 5
+        )
+
+    [Garnier blend] => Array
+        (
+            [godfrey] => 5
+            [peter] => 3
+            [damabel] => 4
+            [ledi] => 5
+        )
+
+    [Dove Lotion] => Array
+        (
+            [godfrey] => 3
+            [Giudy] => 5
+            [peter] => 4
+            [damabel] => 4
+            [Antonia] => 5
+            [ledi] => 5
+        )
+
+    [Skot Roll] => Array
+        (
+            [godfrey] => 5
+            [Giudy] => 3
+            [peter] => 4
+            [Antonia] => 3
+        )
+
+    [ST Ives Hyd..] => Array
+        (
+            [Giudy] => 3
+            [peter] => 4
+            [damabel] => 5
+            [Antonia] => 3
+            [ledi] => 3
+        )
+
+    [Paris Rose] => Array
+        (
+            [Giudy] => 5
+            [peter] => 5
+            [damabel] => 4
+        )
+
+    [ Platform Trainers] => Array
+        (
+            [damabel] => 4
+            [Antonia] => 4
+        )
+
+    [Alway Maxi Pad1] => Array
+        (
+            [damabel] => 4
+            [ledi] => 5
+        )
+
+    [Pink Block Heels] => Array
+        (
+            [damabel] => 4
+        )
+
+    [Nivea Indulgent Wash] => Array
+        (
+            [damabel] => 4
+            [ledi] => 4
+        )
+
+    [Adidas black T-shirt] => Array
+        (
+            [damabel] => 4
+        )
+
+    [Aveeno] => Array
+        (
+            [damabel] => 5
+        )
+
+    [BLACK METALLIC CHUNK] => Array
+        (
+            [ledi] => 3
+        )
+
+    [CHUNKY TRAINERS] => Array
+        (
+            [ledi] => 4
+        )
+
+)
+Array
+(
+)

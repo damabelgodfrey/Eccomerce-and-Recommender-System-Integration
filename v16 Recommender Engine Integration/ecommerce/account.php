@@ -18,6 +18,7 @@ if(isset($user_data['email'])){
   $errors = array();
   $successes = array();
   $ratingRun = 'false';
+  //exlicit rating
   //Rate product by monitoring a rating get request from user
   if(isset($_GET['rate']) && $ratingRun == 'false'){
     $rateString = ($_GET['rate']);
@@ -30,20 +31,27 @@ if(isset($user_data['email'])){
       $rating->RateProduct($P_rateID, $P_ratingValue,$user_id,'explicit');
       $ratingRun = 'true';
     } catch (\Exception $e) {
-    echo $e;
+    $errors[] = "Rating update have not been verified to be successful";
+    $error = $e.getMessage();
+    debugfilewriter($error);
     }
 
     ?>
     <script>
-    //  window.location.replace("http://localhost:81/ecommerce/account");
+      window.location.replace("http://localhost:81/ecommerce/account");
     </script>
     <?php
   }
 if(isset($_GET['edit']) && $successflag == 0){
   $edit_id =(int)$_GET['edit'];
-  $AdressUserResults = $db->query("SELECT * FROM customer_user WHERE email = '$user_email'");
+  $uobj = new UserController();
+  $AdressUserResults = $uobj->selectUserByEmail("customer",$user_email);
+  //$AdressUserResults = $db->query("SELECT * FROM customer_user WHERE email = '$user_email'");
    //var_dump($AdressUserResults); die();
-  $userAddress = mysqli_fetch_assoc($AdressUserResults);
+  //$userAddress = mysqli_fetch_assoc($AdressUserResults);
+  foreach ($AdressUserResults as $userAddress ) {
+    $userAddress = $userAddress;
+  }
   $street = ((isset($_POST['street']) && $_POST['street'] != '')?sanitize($_POST['street']):$userAddress['street']);
   $street2 = ((isset($_POST['street2']) && $_POST['street2'] != '')?sanitize($_POST['street2']):$userAddress['street2']);
   $city = ((isset($_POST['city']) && $_POST['city'] != '')?sanitize($_POST['city']):$userAddress['city']);
@@ -74,10 +82,12 @@ if(isset($_GET['edit']) && $successflag == 0){
       </script>
     <?php
     }else{
-      $insertSql = "UPDATE customer_user SET street ='$street', street2 ='$street2', state = '$state',city = '$city', zip_code ='$zip_code', phone='$phone', country = '$country'
-      WHERE email='$user_email'";
+    //  $insertSql = "UPDATE customer_user SET street ='$street', street2 ='$street2', state = '$state',city = '$city', zip_code ='$zip_code', phone='$phone', country = '$country'
+    //  WHERE email='$user_email'";
       $db->query($insertSql);
       //$_SESSION['success_flash'] .= $userAddress['full_name']. '! Your Address has been successful updated!';
+      $obj = new UserController();
+      $obj->updateUserAddress($street,$street2,$state,$city,$zip_code,$phone,$country,$user_email);
       $successflag = 1;
       }
     }
