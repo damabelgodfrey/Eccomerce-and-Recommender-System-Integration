@@ -31,7 +31,6 @@ class DictionaryLookUp
  // get synonyms for every key world in input
  // return specified no of synonyms including inputed word.
   public static function requestAllSynonyms($productTagKeywords,$noOfSynonyms){
-   var_dump($productTagKeywords);
    $wordArray = explode(' ', "$productTagKeywords");
    $result = array();
     foreach ($wordArray as $word) {
@@ -44,7 +43,6 @@ class DictionaryLookUp
     }
     $merged = array_merge($wordArray,$result);
     $c_result = implode(' ', $merged);
-    var_dump($c_result);
     return $c_result;
   }
 

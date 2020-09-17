@@ -7,7 +7,8 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemFe
 class CollaborativeFilteringInit
 {
   private static $run_interval = RECOMMENDER_ENGINE_INTERVAL;
-
+  const PREDICTION_ALGORITHM_VARIANT = "A2";
+  const RATING_MATRIX_TYPE = "not_nomalised";
   public static function getUserRatingMetrix($user_id){
     $currentUserItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix("User",$user_id);
     return $currentUserItemRatingMatrix;
@@ -24,7 +25,7 @@ class CollaborativeFilteringInit
          $predictionFlag =1;
        }
      }
-     if($predictionFlag == 0){
+     if($predictionFlag == 1){
        foreach ($prediction as $predict) {
          $predictions = json_decode($predict['user_based_prediction'],true);
          foreach ($predictions as $key => $prediction){
@@ -33,19 +34,23 @@ class CollaborativeFilteringInit
        }
        return $finalPredictionArray;
      }else{
-      $userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix("AllUser",$user_id);
+
+      if(self::RATING_MATRIX_TYPE == "normalised"){
+        $userItemRatingMatrix =UserItemRatingMatrix::normalisedMeanRatingMatrix("AllUser");
+      }else{
+        $userItemRatingMatrix =UserItemRatingMatrix::createRatingMatrix("AllUser",0);
+      }
       $currentUserItemRatingMatrix = self::getUserRatingMetrix($user_id);
       if(count($currentUserItemRatingMatrix) ==1){ //check if user has existing rating
-        $simAlgorithm = "EuclideanDistance";
-        $A1 = UserBasedCollaborativeFilteringA1::getPredict($simAlgorithm,$userItemRatingMatrix, $user_id);
-        $A2 = UserBasedCollaborativeFilteringA2::getPredict($simAlgorithm,$userItemRatingMatrix, $user_id);
-        foreach ($A1 as $key => $value) {
-          $finalPredictionArray[$key]= to2Decimal(($value + $A2[$key])/2);
+        $simAlgorithm = "CosineSimilarity";
+        $PredictionAlgoVariant = self:: PREDICTION_ALGORITHM_VARIANT;
+        if($PredictionAlgoVariant == "A1"){
+          $finalPredictionArray = UserBasedCollaborativeFiltering::getPredict($simAlgorithm,$PredictionAlgoVariant,$userItemRatingMatrix, $user_id);
+          debugfilewriter("\n Prediction form Algorithm A1 Results\n");
+        }else{
+          $finalPredictionArray = UserBasedCollaborativeFiltering::getPredict($simAlgorithm,$PredictionAlgoVariant,$userItemRatingMatrix, $user_id);
+          debugfilewriter("\n Prediction form Algorithm A2 Results\n");
         }
-        debugfilewriter("\nAlgorithm One Results\n");
-        debugfilewriter($A1);
-        debugfilewriter("\nAlgorithm Two Results\n");
-        debugfilewriter($A2);
         debugfilewriter($finalPredictionArray);
         $pObj2 = new PredictionController();
         $pObj2->insertCFComputation("userBasedCF", $user_id, $finalPredictionArray);
@@ -110,11 +115,15 @@ class CollaborativeFilteringInit
     }else{
       $userM = self::getUserRatingMetrix($user_id);
       if(count($userM)!= 0){
-        echo "string";
-
-      $itemUserCF = ItemBasedCollaborativeFiltering::computeItemBasedCF($user_id);
+        $userItemRatingMatrix = array();
+        foreach ($userM as $user_id => $itemRating) {
+          foreach ($itemRating as $item_id => $rating) {
+            $userItemRatingMatrix[$item_id]= $rating;
+          }
+        }
+        $itemUserCF = ItemBasedCollaborativeFiltering::computeItemBasedCF($user_id,$userItemRatingMatrix);
+        }
      }
+     return $itemUserCF;
   }
-    return $itemUserCF;
   }
-}

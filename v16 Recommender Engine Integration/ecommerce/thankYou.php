@@ -80,12 +80,14 @@ $return = mysqli_num_rows($itemQ);
     $itemsOrdered = $results['items'];
     $items = json_decode($results['items'],true);
     $rating = new RatingController();
+    $profilling = new UserProfiller();
     foreach ($items as $item) {
       $newSizes = array();
       $qtyOrdered = array();
       $item_id = $item['id'];
-      //rate all purchace product(s)
+      //rate all purchace product(s) and profile user
       $rating->RateProduct($item_id, PURCHASE_RATING,$user_id,'purchase');
+      $profilling->buildUserProfile($user_id, $item_id);
       $productQ = $db->query("SELECT sizes,sold FROM products WHERE id='{$item_id}'");
       $product = mysqli_fetch_assoc($productQ);
       $sizes = sizesToArray($product['sizes']); //function in helper file

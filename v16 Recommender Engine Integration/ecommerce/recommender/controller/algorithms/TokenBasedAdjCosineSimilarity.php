@@ -91,6 +91,4 @@ class TokenBasedAdjCosineSimilarity
       	$result =  $a / (sqrt($b) +sqrt($c));
         return $result;
     }
-
-
 }

@@ -5,7 +5,7 @@
  */
 class PearsonCorrelation
 {
-  public static function computeF_Pearson_Correlation($matrix,$user1,$Users2){
+  public static function my_pearson_correlation2($matrix,$user1,$Users2){
     $similar = array();
     $sumUser1Rating =0;
     $sumUser2Rating =0;
@@ -39,7 +39,7 @@ class PearsonCorrelation
     }
   }
 
-  public static function my_pearson_correlation2($matrix,$user1,$Users2){
+  public static function my_pearson_correlation($matrix,$user1,$Users2){
     $user1metrix =array();
     $user2metrix = array();
     if(isset($matrix[$user1])){
@@ -53,8 +53,8 @@ class PearsonCorrelation
         return 0;
       }
 
-      $user1MeanRating = array_sum($user1metrix)/count($user1metrix);
-      $user2MeanRating = array_sum($user2metrix)/count($user2metrix);
+     $user1MeanRating = array_sum($user1metrix)/count($user1metrix);
+     $user2MeanRating = array_sum($user2metrix)/count($user2metrix);
      $diffprod=0;$xdiff2=0;$ydiff2=0;
       foreach ($matrix[$user1] as $key => $user1Rating) {
         if(array_key_exists($key,$matrix[$Users2])){

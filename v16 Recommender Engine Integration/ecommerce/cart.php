@@ -19,8 +19,20 @@ include 'includes/navigation.php';
 }
 </style>
 <?php
+$objects = [	'The salt' => ['Action', 'Sci-Fi'],	'Lord of The Rings' => ['Adventure', 'Drama', 'Fantasy'],	'Batman' => ['Action', 'Drama', 'Crime'],	'Fight Club' => ['Drama'],	'Pulp Fiction' => ['Drama', 'Crime'],	'Django' => ['Drama', 'Western'],];
 
-WeatherReporter::getWeatherReport($user_id);
+//$obj = new UserProfiller();
+//$obj->buildUserProfile($user_id, 5);
+//$obj = new ItemProfiler();
+//$b = $obj->getAllItemProfile();
+echo "<pre>";
+  //var_dump($b);
+  echo "</pre>";
+//$obj->buildItemProfile();
+//WeatherReporter::getWeatherReport($user_id);
+$obj = new RatingController();
+
+
 $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 $errors = array();
 if(isset($_GET['deleted']) && !empty($_GET['deleted'])){

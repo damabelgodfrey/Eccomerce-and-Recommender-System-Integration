@@ -4,8 +4,8 @@
  * @ return Similarity between two strings
  */
 class JaccardSimilarity{
-  const TAGWEIGHT = 0.6;
-  const OTHERPROWEIGHT = 0.4;
+  const TAGWEIGHT = 0.75;
+  const OTHERPROWEIGHT = 0.25;
   // compute similarity with all property join
   public static function getJaccardSimilarity($token1, $token1tag, $token2, $token2tag) : float{
     $currentToken = $token1.''.$token1tag;

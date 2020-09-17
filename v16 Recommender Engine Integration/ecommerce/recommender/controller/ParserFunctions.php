@@ -12,8 +12,6 @@ function to2Decimal($value){
 
 //get getrusage
 function my_getrusage($rustart,$rend){
-  $rustart = getrusage();
-  $rend = getrusage();
   echo "This process used " . rutime($rend, $rustart, "utime") ." ms for its computations\n";
   echo "It spent " . rutime($rend, $rustart, "stime") ." ms in system calls\n";
 }
@@ -136,4 +134,6 @@ function cart_wishlist_update($mode,$db,$item,$cart_id,$user_id,$json_update,$ca
 }
   $rating = new RatingController();
   $rating->RateProduct($item[0]['id'],CART_WISH_RATING,$user_id,'cart_wish');
+  $profilling = new UserProfiller();
+  $profilling->buildUserProfile($user_id, $item[0]['id']);
 }

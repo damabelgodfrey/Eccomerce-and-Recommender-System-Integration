@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ContentBasedInit.php';
 $EmptyArray = array();
 $simAlgorithm ="LevenshteinDistance";
 $return = 0;
@@ -10,11 +11,22 @@ $recommended = $obj->requestGroupProduct($recommendedArray); //fetch product rec
  $wObj = new WeatherReporter();
  $wObj->getWeatherReport();
 $return = count($recommended);
+}else{
+  $recommendedArray = ContentBasedInit::requestRecommendation($user_id);
+  $obj = new ProductController();
+  $recommended = $obj->requestGroupProduct($recommendedArray); //fetch product recommended
+  $return = count($recommended);
 }
+
 if($return > 0){ ?>
         <div class="col-md-12">
         <div class="panel panel-default">
-        <div class="panel-heading text-center"><h3>⇩ You may also like ⇩</h3>
+          <?php if(is_logged_in()) {
+            ?> <div class="panel-heading text-center"><h3>⇩ Content Based => Based on previous item ⇩</h3> <?php
+          }else {
+            ?><div class="panel-heading text-center"><h3>⇩ You may also like ⇩</h3> <?php
+          }?>
+
         </div>
         <div class="panel-body">
             <div class="posts_list">

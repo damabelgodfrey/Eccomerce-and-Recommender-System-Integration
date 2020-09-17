@@ -70,8 +70,8 @@ class ItemFeatureSimComputation
             break;
             case 'TokenBasedAdjustedCosineSimilarity':
               $userAveRating = $rating;
-              //$result = TokenBasedAdjCosineSimilarity::getTB_AdjustedCBConsineSim($thisItemFeatures.' '.$thisItemTags, $otherItemFeatures.' ' .$otherItemTags,$userAveRating);
-              $result = TokenBasedAdjCosineSimilarity::transformPreferences(11);
+              $result = TokenBasedAdjCosineSimilarity::getTB_AdjustedCBConsineSim($thisItemFeatures.' '.$thisItemTags, $otherItemFeatures.' ' .$otherItemTags,$userAveRating);
+            //  $result = TokenBasedAdjCosineSimilarity::transformPreferences(11);
               break;
           case 'CosineRatingSimilarityWeighted':
             $result = TokenBasedCosineSimilarity::getCBCosineRatingSimilarityWeighted($thisItemFeatures, $otherItemFeatures, $p2_aveRating);

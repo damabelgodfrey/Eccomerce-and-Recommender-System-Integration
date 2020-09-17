@@ -13,7 +13,6 @@ class TokenBasedCosineSimilarity
     const CONTENT_WEIGHT2 = 0.25; // content weight is less when computed with tag
     const TAG_WEIGHT = 0.75;
 
-
     private static function tokenise($item1, $item2){
       $array = preg_split('/[^[:alnum:]]+/', strtolower($item1));
       foreach($array as $item)
@@ -31,21 +30,23 @@ class TokenBasedCosineSimilarity
     }
     public static function getCBConsineSimilarity(&$item1Info, &$item2Info)
     {
+    //$item1Info1 =  "peter love love paul";
+    //$item2Info2 = "james love peter";
        self::tokenise($item1Info, $item2Info);
        $xToken = self::$item1Tokens;
        $yToken = self::$item2Tokens;
         $a = $b = $c = 0;
-        $uniqueMergedTokens = array_merge($xToken,$yToken);
+        $uniqueMergedTokens = array_merge($yToken,$xToken);
         $item1Product= array();
         $item2Product= array();
       	$xArray=array();
       	$yArray=array();
       	$key=0;
-      	foreach ($uniqueMergedTokens as $token=>$val) {
+      	foreach ($uniqueMergedTokens as $token=>$val){
           if(array_key_exists($token,$xToken)){
-          $xArray[$key]=  $val;
+           $xArray[$key]=  $val;
           }else{
-            $xArray[$key] = 0;
+           $xArray[$key] = 0;
           }
           if(array_key_exists($token,$yToken)){
           $yArray[$key]=  $val;
@@ -69,7 +70,10 @@ class TokenBasedCosineSimilarity
         if($b == 0){
           return 0;
         }
-      	return $a / sqrt($b * $c);
+        $cs = $a / sqrt($b * $c);
+    //    var_dump($cs);
+      	//return $a / sqrt($b * $c);
+        return $cs;
     }
 
     public static function getCBCosineRatingSimilarityWeighted(&$item1Info, &$item2Info,&$p_aveRating){
