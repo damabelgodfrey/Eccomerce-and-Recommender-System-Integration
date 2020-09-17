@@ -10,6 +10,9 @@ function to2Decimal($value){
   return sprintf('%0.2f', $value);
 }
 
+function toDecimal($value,$no){
+  return sprintf('%0.'.$no.'f', $value);
+}
 //get getrusage
 function my_getrusage($rustart,$rend){
   echo "This process used " . rutime($rend, $rustart, "utime") ." ms for its computations\n";
@@ -54,6 +57,7 @@ function processContent($stopword_array,$contentAtribute) : string{
   $content_ = preg_replace('/\b('.$stopword_string.')\b/','',$item_string); //remove stop words from content attribute
   $content_arr = explode(' ',$content_);
   foreach ($content_arr as $word) {
+    //https://tartarus.org/martin/PorterStemmer/php.txt
     $stemmed_word = PorterStemmer::Stem($word);
     $stemmed_parts[] = $stemmed_word;
   }

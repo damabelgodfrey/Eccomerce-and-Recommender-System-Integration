@@ -5,7 +5,7 @@
  */
 class PearsonCorrelation
 {
-  public static function my_pearson_correlation2($matrix,$user1,$Users2){
+  public static function getCorrelation2($matrix,$user1,$Users2){
     $similar = array();
     $sumUser1Rating =0;
     $sumUser2Rating =0;
@@ -39,7 +39,7 @@ class PearsonCorrelation
     }
   }
 
-  public static function my_pearson_correlation($matrix,$user1,$Users2){
+  public static function getCorrelation($matrix,$user1,$Users2){
     $user1metrix =array();
     $user2metrix = array();
     if(isset($matrix[$user1])){

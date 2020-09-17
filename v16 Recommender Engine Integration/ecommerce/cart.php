@@ -19,19 +19,19 @@ include 'includes/navigation.php';
 }
 </style>
 <?php
-$objects = [	'The salt' => ['Action', 'Sci-Fi'],	'Lord of The Rings' => ['Adventure', 'Drama', 'Fantasy'],	'Batman' => ['Action', 'Drama', 'Crime'],	'Fight Club' => ['Drama'],	'Pulp Fiction' => ['Drama', 'Crime'],	'Django' => ['Drama', 'Western'],];
 
 //$obj = new UserProfiller();
 //$obj->buildUserProfile($user_id, 5);
-//$obj = new ItemProfiler();
+$obj = new ItemProfiler();
 //$b = $obj->getAllItemProfile();
 echo "<pre>";
   //var_dump($b);
   echo "</pre>";
 //$obj->buildItemProfile();
 //WeatherReporter::getWeatherReport($user_id);
-$obj = new RatingController();
-
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/CollaborativeFilteringInit.php';
+// $recommendedUserBasedCF = CollaborativeFilteringInit::runUserBasedRecommendationEngine();
+ //$recommendedItemBasedCF = CollaborativeFilteringInit::runItemBasedRecommendationEngine();
 
 $_SESSION['rdrurl'] = $_SERVER['REQUEST_URI'];
 $errors = array();

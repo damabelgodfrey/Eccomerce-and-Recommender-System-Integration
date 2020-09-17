@@ -11,6 +11,7 @@ class ItemProfiler extends DBh {
     $p_obj = new ProductController();
     $products = $p_obj->getAllProducts();
     $updated_time = date("Y-m-d h:i:s", time());
+    $stopWord = getStopwordsFromFile();
     foreach ($products as $key => $product) {
       $tags =DictionaryLookUp::requestAllSynonyms($product['p_keyword'],$noOfSynonysPerword);
       $itemProfileTokens= processContent($stopWord, $tags);
@@ -21,12 +22,12 @@ class ItemProfiler extends DBh {
             );
     }
     //a multi insertion of all products to item profile table with built querry
-    $query = 'INSERT INTO item_profile (`itemID`,`profile`, `last_updated`) VALUES ';
+    $query = 'REPLACE INTO item_profile VALUES ';
     $query_parts = array();
     foreach ($profiling as $itemID => $profile) {
       $query_parts[] = "('" . $itemID . "','" . json_encode($profile) . "', '" . $updated_time . "')";
     }
-    echo $query .= implode(',', $query_parts);
+     $query .= implode(',', $query_parts);
      $myQuerry = $this->getConnection()->exec($query);
      return;
   }

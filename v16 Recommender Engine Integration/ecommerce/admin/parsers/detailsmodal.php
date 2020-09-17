@@ -136,7 +136,7 @@ $tag = $product['p_keyword'];
     </div>
 
 <?php if(is_logged_in()):
-include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/view/collaborativeFilteringRecommendationView.php';
+include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/view/RecommenderView.php';
  endif;
  include $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/view/contentBasedrecommendationView.php';
  ?>

@@ -27,17 +27,17 @@ class UserItemRatingMatrix {
  }
 //transform rating for item based CF
   public static function TransformedMatrix($itemUserRatingMatrix){
-    $transformedMatrix = array();
+    $transposedMatrix = array();
     foreach($itemUserRatingMatrix as $User => $UserItemRating){
         foreach($UserItemRating as $item => $rating)
         {
-          $transformedMatrix[$item][$User] = $rating;
+          $transposedMatrix[$item][$User] = $rating;
         }
     }
-    return $transformedMatrix;
+    return $transposedMatrix;
     }
 
- //compute user mean rating
+ //compute user mean rating for all users
  public static function computeUserMeanRatings($matrix) : array{
     $UserMeans = array();
     foreach ($matrix as $userID => $ItemRatingArray) { //for each user

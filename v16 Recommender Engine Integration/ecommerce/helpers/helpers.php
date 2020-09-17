@@ -1,13 +1,13 @@
 <?php
 //require_once '../core/init';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/includes/PorterStemmer.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/algorithms/PorterStemmer.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/DictionaryLookUp.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/WeatherReporter.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ContentBasedRecommenderEngine.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserBasedCollaborativeFiltering.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserBasedCFEngine.php';
 //require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/UserBasedCollaborativeFilteringA2.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/RatingController.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemBasedCollaborativeFiltering.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ItemBasedCFEngine.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/ProductController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/TransactionController.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/ecommerce/recommender/controller/WishListRepoController.php';

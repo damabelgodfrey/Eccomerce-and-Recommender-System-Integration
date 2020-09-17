@@ -11,15 +11,11 @@ class ContentBasedRecommenderEngine
   const ALGORITHM = "ConsineSimilarity";
   private static $uProfileBrands;
   private static $uProfileCategories;
-  // get user profile
-  private static function getUserProfile($user_id){
-  $profilerObj = new UserProfiler();
-  $profiles = $profilerObj->getUserProfile($user_id);
+  // get user profile informations
+  //@return weighted tokens
+  private static function processUserProfile($user_id,$profile){
   $existingProfiling = array();
-  if(count($profiles) == 0){
-    return " ";
-  }else{
-    foreach ($profiles as $key => $profile) {
+
       $itemIDCatBrand = explode('::',$profile['itemID_cat_brand']);
       $itemCatArr = explode(',',$itemIDCatBrand[1]);
       $itemBrandArr = explode(',',$itemIDCatBrand[2]);
@@ -44,16 +40,15 @@ class ContentBasedRecommenderEngine
         }
     }
     $profileTokens = trim(implode(' ', $profileTokens));
-   }
     return $profileTokens;
-  }
 }
  //uses several algorithms to compute item similarity using specified features
  //product descripted and product tag
  //ranks all processed items by similarity score against current user profile.
- public static function computeContentBasedPrediction($user_id): array{
+ public static function computeContentBasedPrediction($user_id,$userProfiles): string{
   $recommendedArray = array();
-  $userProfileTokens = self::getUserProfile($user_id); // get current user profile
+  $recommended ="";
+  $userProfileTokens = self::processUserProfile($user_id,$userProfiles); // get current user profile
   $ucatBrand = self::$uProfileCategories.' '.self::$uProfileBrands;
   if($userProfileTokens != " ") {
    $stopWord = getStopwordsFromFile();
@@ -98,6 +93,7 @@ class ContentBasedRecommenderEngine
      }
    }
  }
+
     if(count($recommendedArray) != 0){
      arsort($recommendedArray);
      $recommendedArray = array_slice($recommendedArray, 0, 10, true);
@@ -106,12 +102,12 @@ class ContentBasedRecommenderEngine
        $key = +$key;
        $predicted_rating[] = array(
            'product_id'       => $key,
-           'predicted_rating' => $value,
+           'similarity' => $value,
          );
      }
-     $recommendedArray = json_encode($predicted_rating);
+     $recommended= json_encode($predicted_rating);
     }
   }
-   return $recommendedArray;
+   return $recommended;
  }
 }
